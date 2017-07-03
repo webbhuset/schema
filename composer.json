@@ -4,7 +4,7 @@
     "license": "proprietary",
     "description": "A library for data handling and validation.",
     "require": {
-        "php": "^5.4.0 || ^7.0"
+        "php": "^7.0"
     },
     "require-dev": {
         "webbhuset/test": "dev-master"
