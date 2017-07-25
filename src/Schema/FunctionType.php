@@ -2,45 +2,9 @@
 
 namespace Webbhuset\Data\Schema;
 
-use Webbhuset\Data\Schema\TypeConstructor AS T;
+$phpVersion = phpversion();
 
-class FunctionType extends AbstractType
-{
-    protected function constructFromArray(array $array)
-    {
-        $this->isNullable = $array['nullable'] ?? $this->isNullable;
-    }
-
-    public function toArray() : array
-    {
-        return [
-            'type'  => 'function',
-            'args'  => [
-                'nullable' => $this->isNullable,
-            ]
-        ];
-    }
-
-    public static function getArraySchema() : TypeInterface
-    {
-        return T::Struct([
-            'type' => T::Enum(['function']),
-            'args' => T::Struct([
-                'nullable' => T::Bool(T::NULLABLE),
-            ])
-        ]);
-    }
-
-    public function getErrors($value)
-    {
-        if ($errors = parent::getErrors($value)) {
-            return $errors;
-        }
-
-        if (!is_callable($value)) {
-            return "Value is not callable function";
-        }
-
-        return false;
-    }
+switch (true) {
+    case version_compare($phpVersion, '7.0', '>='): return require_once 'FunctionType-7.0.php';
+    case version_compare($phpVersion, '5.5', '>='): return require_once 'FunctionType-5.5.php';
 }
