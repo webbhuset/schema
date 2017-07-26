@@ -10,7 +10,7 @@ abstract class AbstractType implements TypeInterface
 
     public function __construct(...$args)
     {
-        if (count($args) == 1 && ($arg = reset($args)) && isset($arg[T::ARG_KEY_ARRAY])) {
+        if (count($args) == 1 && ($arg = reset($args)) && is_array($arg) && isset($arg[T::ARG_KEY_ARRAY])) {
             $array = $arg[T::ARG_KEY_ARRAY];
 
             if ($errors = static::getArraySchema()->getErrors($array)) {
