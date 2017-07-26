@@ -99,6 +99,10 @@ class StringType extends AbstractType
             return $error;
         }
 
+        if (is_null($value)) {
+            return false;
+        }
+
         if (!is_string($value)) {
             $string = $this->getValueString($value);
             return "Not a valid string: '{$string}'";
