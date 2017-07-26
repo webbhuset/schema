@@ -4,10 +4,10 @@ namespace Webbhuset\Data\Isomorphic;
 
 class MapValues implements IsomorphicFunctionInterface
 {
-    protected $map;
+    protected $map = [];
     protected $caseSensitive;
 
-    public function __construct($map, $caseSensitive = true)
+    public function __construct(array $map, $caseSensitive = true)
     {
         $this->caseSensitive = $caseSensitive;
 
