@@ -58,6 +58,11 @@ class TypeConstructor
         return new BoolType(...$args);
     }
 
+    public static function Date(...$args) : StringType\DateType
+    {
+        return new StringType\DateType(...$args);
+    }
+
     public static function Datetime(...$args) : StringType\DatetimeType
     {
         return new StringType\DatetimeType(...$args);
@@ -135,6 +140,8 @@ class TypeConstructor
                 return ArraySchemaType::getArraySchema();
             case 'bool':
                 return BoolType::getArraySchema();
+            case 'date':
+                return StringType\DateType::getArraySchema();
             case 'datetime':
                 return StringType\DatetimeType::getArraySchema();
             case 'decimal':
