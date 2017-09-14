@@ -94,6 +94,10 @@ class HashmapType extends AbstractType
 
     public function cast($dataArray)
     {
+        if ($dataArray === null) {
+            return [];
+        }
+
         if (!is_array($dataArray)) {
             throw new TypeException("Can only cast arrays.");
         }
