@@ -3,6 +3,7 @@ namespace Webbhuset\Data\Schema\FloatType;
 
 use Webbhuset\Data\Schema\FloatType;
 use Webbhuset\Data\Schema\TypeConstructor AS T;
+use Webbhuset\Data\Schema\TypeInterface;
 
 class DecimalType extends FloatType
 {
