@@ -53,8 +53,8 @@ class FloatType extends AbstractType
             'type' => T::Enum(['float']),
             'args' => T::Struct([
                 'nullable'  => T::Bool(T::NULLABLE),
-                'min'       => T::Int(T::NULLABLE),
-                'max'       => T::Int(T::NULLABLE),
+                'min'       => T::Float(T::NULLABLE),
+                'max'       => T::Float(T::NULLABLE),
             ])
         ]);
     }

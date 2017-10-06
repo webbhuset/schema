@@ -1,28 +1,10 @@
 <?php
+
 namespace Webbhuset\Data\Schema\FloatType;
 
-use Webbhuset\Data\Schema;
+$phpVersion = phpversion();
 
-class DecimalType extends Type\FloatType
-{
-    protected $tolerance = 1e-4;
-    protected $decimalCount = 4;
-
-    public function getErrors($value)
-    {
-        if ($error = parent::getErrors($value)){
-            return $error;
-        }
-
-        if (is_null($value) && $this->isNullable) {
-            return false;
-        }
-
-        $rounded = round($value, $this->decimalCount);
-        if (abs($rounded - $value) > 1e-9) {
-            return "Too many decimals, max {$this->decimalCount} allowed: {$value}";
-        }
-
-        return false;
-    }
+switch (true) {
+    case version_compare($phpVersion, '7.0', '>='): return require_once 'DecimalType-7.0.php';
+    case version_compare($phpVersion, '5.5', '>='): return require_once 'DecimalType-5.5.php';
 }

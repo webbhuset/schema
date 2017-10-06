@@ -12,6 +12,7 @@ class TypeConstructor
     const ARG_KEY_MATCH     = 'KEY_MATCH';
     const ARG_KEY_NOTMATCH  = 'KEY_NOTMATCH';
     const ARG_KEY_ARRAY     = 'KEY_ARRAY';
+    const ARG_KEY_DECIMALS  = 'KEY_DECIMALS';
 
     public static function NULLABLE(bool $flag)
     {
@@ -41,6 +42,11 @@ class TypeConstructor
     public static function CASE_SENSITIVE($flag) : string
     {
         return $flag ? self::CASE_SENSITIVE : self::CASE_INSENSITIVE;
+    }
+
+    public static function DECIMALS($arg) : array
+    {
+        return [self::ARG_KEY_DECIMALS => $arg];
     }
 
     public static function Any(...$args) : AnyType
