@@ -13,6 +13,10 @@ class ImplodeArray implements IsomorphicFunctionInterface
 
     public function __invoke($value)
     {
+        if ($value === null) {
+            return '';
+        }
+
         return implode($this->delimiter, $value);
     }
 

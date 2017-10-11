@@ -13,6 +13,10 @@ class ExplodeString implements IsomorphicFunctionInterface
 
     public function __invoke($value)
     {
+        if ($value === null) {
+            return [];
+        }
+
         return explode($this->delimiter, $value);
     }
 
