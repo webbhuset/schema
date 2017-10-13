@@ -7,6 +7,7 @@ class TypeConstructor
     const NULLABLE          = 'IS_NULLABLE';
     const CASE_SENSITIVE    = 'CASE_SENSITIVE';
     const CASE_INSENSITIVE  = 'CASE_INSENSITIVE';
+    const SKIP_EMPTY        = 'SKIP_EMPTY';
     const ARG_KEY_MIN       = 'KEY_MIN';
     const ARG_KEY_MAX       = 'KEY_MAX';
     const ARG_KEY_MATCH     = 'KEY_MATCH';
@@ -17,6 +18,11 @@ class TypeConstructor
     public static function NULLABLE(bool $flag)
     {
         return $flag ? self::NULLABLE : null;
+    }
+
+    public static function SKIP_EMPTY(bool $flag)
+    {
+        return $flag ? self::SKIP_EMPTY : null;
     }
 
     public static function MIN($arg) : array

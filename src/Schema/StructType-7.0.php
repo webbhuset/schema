@@ -6,10 +6,15 @@ use Webbhuset\Data\Schema\TypeConstructor AS T;
 
 class StructType extends AbstractType
 {
-    protected $fields = [];
+    protected $fields       = [];
+    protected $skipEmpty    = false;
 
     protected function parseArg($arg)
     {
+        if ($arg == T::SKIP_EMPTY) {
+            $this->skipEmpty = true;
+        }
+
         if (is_array($arg)) {
             foreach ($arg as $field => $type) {
                 if (!$type instanceof TypeInterface) {
@@ -73,7 +78,7 @@ class StructType extends AbstractType
     {
         $result = [];
         foreach ($this->fields as $key => $type) {
-            if (!isset($value[$key])){
+            if ($this->skipEmpty && !array_key_exists($key, $value)) {
                 continue;
             }
 
@@ -94,10 +99,14 @@ class StructType extends AbstractType
             return "Not a valid array: '{$string}'";
         }
 
-        $errors     = [];
+        $errors = [];
         foreach ($this->fields as $key => $type) {
-            if (!isset($value[$key])) {
-                $value[$key] = null;
+            if (!array_key_exists($key, $value)) {
+                if ($this->skipEmpty) {
+                    continue;
+                } else {
+                    $value[$key] = null;
+                }
             }
 
             $tmpError = $type->getErrors($value[$key]);
