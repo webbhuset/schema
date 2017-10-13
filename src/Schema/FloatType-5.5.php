@@ -94,6 +94,12 @@ class FloatType extends AbstractType
             throw new TypeException("Not a float");
         }
 
+        if ($a === null && $b === null) {
+            return true;
+        } elseif ($a === null || $b === null) {
+            return false;
+        }
+
         return abs($a - $b) < $this->tolerance;
     }
 
