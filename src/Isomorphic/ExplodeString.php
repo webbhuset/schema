@@ -13,7 +13,7 @@ class ExplodeString implements IsomorphicFunctionInterface
 
     public function __invoke($value)
     {
-        if ($value === null) {
+        if ($value === null || $value === '') {
             return [];
         }
 
