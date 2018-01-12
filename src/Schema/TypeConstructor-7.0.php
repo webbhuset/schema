@@ -2,19 +2,8 @@
 
 namespace Webbhuset\Data\Schema;
 
-class TypeConstructor
+class TypeConstructor extends BaseTypeConstructor
 {
-    const NULLABLE          = 'IS_NULLABLE';
-    const CASE_SENSITIVE    = 'CASE_SENSITIVE';
-    const CASE_INSENSITIVE  = 'CASE_INSENSITIVE';
-    const SKIP_EMPTY        = 'SKIP_EMPTY';
-    const ARG_KEY_MIN       = 'KEY_MIN';
-    const ARG_KEY_MAX       = 'KEY_MAX';
-    const ARG_KEY_MATCH     = 'KEY_MATCH';
-    const ARG_KEY_NOTMATCH  = 'KEY_NOTMATCH';
-    const ARG_KEY_ARRAY     = 'KEY_ARRAY';
-    const ARG_KEY_DECIMALS  = 'KEY_DECIMALS';
-
     public static function NULLABLE(bool $flag)
     {
         return $flag ? self::NULLABLE : null;
@@ -25,117 +14,117 @@ class TypeConstructor
         return $flag ? self::SKIP_EMPTY : null;
     }
 
-    public static function MIN($arg) : array
+    public static function MIN($arg): array
     {
         return [self::ARG_KEY_MIN => $arg];
     }
 
-    public static function MAX($arg) : array
+    public static function MAX($arg): array
     {
         return [self::ARG_KEY_MAX => $arg];
     }
 
-    public static function MATCH($arg) : array
+    public static function MATCH($arg): array
     {
         return [self::ARG_KEY_MATCH => $arg];
     }
 
-    public static function NOTMATCH($arg) : array
+    public static function NOTMATCH($arg): array
     {
         return [self::ARG_KEY_NOTMATCH => $arg];
     }
 
-    public static function CASE_SENSITIVE($flag) : string
+    public static function CASE_SENSITIVE($flag): string
     {
         return $flag ? self::CASE_SENSITIVE : self::CASE_INSENSITIVE;
     }
 
-    public static function DECIMALS($arg) : array
+    public static function DECIMALS($arg): array
     {
         return [self::ARG_KEY_DECIMALS => $arg];
     }
 
-    public static function Any(...$args) : AnyType
+    public static function Any(...$args): AnyType
     {
         return new AnyType(...$args);
     }
 
-    public static function ArraySchema(...$args) : ArraySchemaType
+    public static function ArraySchema(...$args): ArraySchemaType
     {
         return new ArraySchemaType(...$args);
     }
 
-    public static function Bool(...$args) : BoolType
+    public static function Bool(...$args): BoolType
     {
         return new BoolType(...$args);
     }
 
-    public static function Date(...$args) : StringType\DateType
+    public static function Date(...$args): StringType\DateType
     {
         return new StringType\DateType(...$args);
     }
 
-    public static function Datetime(...$args) : StringType\DatetimeType
+    public static function Datetime(...$args): StringType\DatetimeType
     {
         return new StringType\DatetimeType(...$args);
     }
 
-    public static function Decimal(...$args) : FloatType\DecimalType
+    public static function Decimal(...$args): FloatType\DecimalType
     {
         return new FloatType\DecimalType(...$args);
     }
 
-    public static function Enum(...$args) : EnumType
+    public static function Enum(...$args): EnumType
     {
         return new EnumType(...$args);
     }
 
-    public static function Float(...$args) : FloatType
+    public static function Float(...$args): FloatType
     {
         return new FloatType(...$args);
     }
 
-    public static function Function(...$args) : FunctionType
+    public static function Function(...$args): FunctionType
     {
         return new FunctionType(...$args);
     }
 
-    public static function Hashmap(...$args) : HashmapType
+    public static function Hashmap(...$args): HashmapType
     {
         return new HashmapType(...$args);
     }
 
-    public static function Int(...$args) : IntType
+    public static function Int(...$args): IntType
     {
         return new IntType(...$args);
     }
 
-    public static function Scalar(...$args) : ScalarType
+    public static function Scalar(...$args): ScalarType
     {
         return new ScalarType(...$args);
     }
 
-    public static function Set(...$args) : SetType
+    public static function Set(...$args): SetType
     {
         return new SetType(...$args);
     }
 
-    public static function String(...$args) : StringType
+    public static function String(...$args): StringType
     {
         return new StringType(...$args);
     }
 
-    public static function Struct(...$args) : StructType
+    public static function Struct(...$args): StructType
     {
         return new StructType(...$args);
     }
 
-    public static function Union(...$args) : UnionType
+    public static function Union(...$args): UnionType
     {
         return new UnionType(...$args);
     }
 
-    public static function constructFromArray(array $array) : TypeInterface
+    public static function constructFromArray(array $array): TypeInterface
     {
         $type = $array['type'];
         $args = [self::ARG_KEY_ARRAY => $array];
@@ -143,7 +132,7 @@ class TypeConstructor
         return self::$type($args);
     }
 
-    public static function getArraySchema(string $type) : TypeInterface
+    public static function getArraySchema(string $type): TypeInterface
     {
         switch (strtolower($type)) {
             case 'any':

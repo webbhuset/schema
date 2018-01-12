@@ -2,6 +2,44 @@
 
 namespace Webbhuset\Data\Schema;
 
+use Webbhuset\Data\Schema\TypeConstructor as T;
+
+abstract class BaseFunctionType extends AbstractType
+{
+    protected function _toArray()
+    {
+        return [
+            'type'  => 'function',
+            'args'  => [
+                'nullable' => $this->isNullable,
+            ]
+        ];
+    }
+
+    protected static function _getArraySchema()
+    {
+        return T::Struct([
+            'type' => T::Enum(['function']),
+            'args' => T::Struct([
+                'nullable' => T::Bool(T::NULLABLE),
+            ])
+        ]);
+    }
+
+    public function getErrors($value)
+    {
+        if ($errors = parent::getErrors($value)) {
+            return $errors;
+        }
+
+        if (!is_callable($value)) {
+            return "Value is not callable function";
+        }
+
+        return false;
+    }
+}
+
 $phpVersion = phpversion();
 
 switch (true) {

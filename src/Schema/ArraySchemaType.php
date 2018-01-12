@@ -2,6 +2,58 @@
 
 namespace Webbhuset\Data\Schema;
 
+use Webbhuset\Data\Schema\TypeConstructor as T;
+
+abstract class BaseArraySchemaType extends AbstractType
+{
+    protected function _toArray()
+    {
+        return [
+            'type' => 'arrayschema',
+            'args' => [
+                'nullable' => $this->isNullable,
+            ],
+        ];
+    }
+
+    protected static function _getArraySchema()
+    {
+        return T::Struct([
+            'type' => T::Enum(['arrayschema']),
+            'args' => T::Struct([
+                'nullable'  => T::Bool(T::NULLABLE),
+            ]),
+        ]);
+    }
+
+    public function getErrors($value)
+    {
+        if ($error = parent::getErrors($value)) {
+            return $error;
+        }
+
+        if ($value === null && $this->isNullable) {
+            return false;
+        }
+
+        $valueSchema = T::Struct([
+            'type' => T::String(),
+            'args' => T::Hashmap(T::String(), T::Any()),
+        ]);
+        if ($error = $valueSchema->getErrors($value)) {
+            return $error;
+        }
+
+        try {
+            $arraySchema = T::getArraySchema($value['type']);
+        } catch (TypeException $e) {
+            return "Unknown type '{$value['type']}'";
+        }
+
+        return $arraySchema->getErrors($value);
+    }
+}
+
 $phpVersion = phpversion();
 
 switch (true) {

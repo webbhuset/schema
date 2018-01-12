@@ -2,6 +2,20 @@
 
 namespace Webbhuset\Data\Schema;
 
+class BaseTypeConstructor
+{
+    const NULLABLE          = 'IS_NULLABLE';
+    const CASE_SENSITIVE    = 'CASE_SENSITIVE';
+    const CASE_INSENSITIVE  = 'CASE_INSENSITIVE';
+    const SKIP_EMPTY        = 'SKIP_EMPTY';
+    const ARG_KEY_MIN       = 'KEY_MIN';
+    const ARG_KEY_MAX       = 'KEY_MAX';
+    const ARG_KEY_MATCH     = 'KEY_MATCH';
+    const ARG_KEY_NOTMATCH  = 'KEY_NOTMATCH';
+    const ARG_KEY_ARRAY     = 'KEY_ARRAY';
+    const ARG_KEY_DECIMALS  = 'KEY_DECIMALS';
+}
+
 $phpVersion = phpversion();
 
 switch (true) {

@@ -2,6 +2,13 @@
 
 namespace Webbhuset\Data\Schema;
 
+interface BaseTypeInterface
+{
+    function diff($a, $b);
+    function cast($value);
+    function getErrors($value);
+}
+
 $phpVersion = phpversion();
 
 switch (true) {

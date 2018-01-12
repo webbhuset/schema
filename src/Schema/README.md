@@ -24,7 +24,7 @@ Types
 ```php
 <?php
 
-use Webbhuset\Data\Schema\TypeConstructor AS T;
+use Webbhuset\Data\Schema\TypeConstructor as T;
 
 $languagesType  = T::Enum(['en', 'sv', 'es']);
 $currencyType   = T::Enum(['USD', 'SEK', 'EUR']);

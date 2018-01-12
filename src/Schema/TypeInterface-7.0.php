@@ -2,13 +2,9 @@
 
 namespace Webbhuset\Data\Schema;
 
-interface TypeInterface
+interface TypeInterface extends BaseTypeInterface
 {
-    public function __construct();
-    public static function getArraySchema() : TypeInterface;
-    public function toArray() : array;
-    public function cast($value);
-    public function getErrors($value);
-    public function isEqual($a, $b) : bool;
-    public function diff($a, $b);
+    static function getArraySchema(): TypeInterface;
+    function toArray(): array;
+    function isEqual($a, $b): bool;
 }

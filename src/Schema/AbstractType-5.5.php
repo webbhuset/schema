@@ -2,12 +2,10 @@
 
 namespace Webbhuset\Data\Schema;
 
-use Webbhuset\Data\Schema\TypeConstructor AS T;
+use Webbhuset\Data\Schema\TypeConstructor as T;
 
-abstract class AbstractType implements TypeInterface
+abstract class AbstractType extends BaseAbstractType
 {
-    protected $isNullable = false;
-
     public function __construct()
     {
         $args = func_get_args();
@@ -28,65 +26,33 @@ abstract class AbstractType implements TypeInterface
         $this->afterConstruct();
     }
 
-    abstract protected function constructFromArray(array $array);
-
-    protected function afterConstruct()
+    public function toArray()
     {
-
+        return static::_toArray();
     }
 
-    protected function parseArg($arg)
+    public static function getArraySchema()
     {
-        if ($arg == T::NULLABLE) {
-            $this->isNullable = true;
-        }
+        return static::_getArraySchema();
     }
 
-    public function getErrors($value)
+    protected static function _getArraySchema()
     {
-        if (is_null($value) && !$this->isNullable) {
-            return "Value is required";
-        }
-
-        return false;
+        throw new \BadMethodCallException('Function not overriden in child class.');
     }
 
     public function isEqual($a, $b)
     {
-        return $a == $b;
+        return static::_isEqual($a, $b);
     }
 
-    public function cast($value)
-    {
-        return $value;
-    }
-
-    /**
-     * Returns the string representation of a value.
-     *
-     * @param mixed $value
-     *
-     * @return string
-     */
     protected function getValueString($value)
     {
-        if (is_object($value)) {
-            return 'Object';
-        }
-        if (is_array($value)) {
-            return 'Array';
-        }
-
-        return (string) $value;
-    }
-
-    public function diff($a, $b)
-    {
-        throw new TypeException("Diff method not implemented for this type.");
+        return static::_getValueString($value);
     }
 
     public function isScalar()
     {
-        return false;
+        return static::_isScalar();
     }
 }
