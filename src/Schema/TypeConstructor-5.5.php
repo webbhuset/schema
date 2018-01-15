@@ -17,6 +17,11 @@ class TypeConstructor extends BaseTypeConstructor
         return $flag ? self::SKIP_EMPTY : null;
     }
 
+    public static function ALLOW_UNDEFINED($flag)
+    {
+        return $flag ? self::ALLOW_UNDEFINED : null;
+    }
+
     public static function MIN($arg)
     {
         return [self::ARG_KEY_MIN => $arg];

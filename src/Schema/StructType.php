@@ -6,14 +6,23 @@ use Webbhuset\Data\Schema\TypeConstructor as T;
 
 abstract class BaseStructType extends AbstractType
 {
-    protected $fields       = [];
-    protected $skipEmpty    = false;
+    protected $fields           = [];
+    protected $skipEmpty        = false;
+    protected $allowUndefined   = false;
 
 
     protected function parseArg($arg)
     {
         if ($arg == T::SKIP_EMPTY) {
             $this->skipEmpty = true;
+
+            return;
+        }
+
+        if ($arg == T::ALLOW_UNDEFINED) {
+            $this->allowUndefined = true;
+
+            return;
         }
 
         if (is_array($arg)) {
@@ -47,8 +56,10 @@ abstract class BaseStructType extends AbstractType
         return [
             'type'  => 'struct',
             'args'  => [
-                'nullable'  => $this->isNullable,
-                'fields'    => $fields,
+                'nullable'          => $this->isNullable,
+                'fields'            => $fields,
+                'skipEmpty'         => $this->skipEmpty,
+                'allowUndefined'    => $this->allowUndefined,
             ],
         ];
     }
@@ -58,8 +69,10 @@ abstract class BaseStructType extends AbstractType
         return T::Struct([
             'type' => T::Enum(['struct']),
             'args' => T::Struct([
-                'nullable'  => T::Bool(T::NULLABLE),
-                'fields'    => T::Hashmap(T::Scalar(), T::ArraySchema(), T::MIN(1)),
+                'nullable'          => T::Bool(T::NULLABLE),
+                'fields'            => T::Hashmap(T::Scalar(), T::ArraySchema(), T::MIN(1)),
+                'skipEmpty'         => T::Bool(T::NULLABLE),
+                'allowUndefined'    => T::Bool(T::NULLABLE),
             ])
         ]);
     }
@@ -109,6 +122,12 @@ abstract class BaseStructType extends AbstractType
             }
 
             unset($value[$key]);
+        }
+
+        if (!$this->allowUndefined) {
+            foreach ($value as $key => $val) {
+                $errors[] = "Unknown key '{$key}'";
+            }
         }
 
         if (!empty($errors)) {

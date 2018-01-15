@@ -13,7 +13,9 @@ class StructType extends BaseStructType
             $fields[$key] = T::constructFromArray($fieldArray);
         }
 
-        $this->isNullable   = isset($array['nullable']) ? $array['nullable'] : $this->isNullable;
-        $this->fields       = $fields;
+        $this->isNullable       = isset($array['nullable']) ? $array['nullable'] : $this->isNullable;
+        $this->fields           = $fields;
+        $this->skipEmpty        = isset($array['skipEmpty']) ? $array['skipEmpty'] : $this->skipEmpty;
+        $this->allowUndefined   = $array['allowUndefined'] ? $array['allowUndefined'] : $this->allowUndefined;
     }
 }
