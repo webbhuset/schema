@@ -43,6 +43,11 @@ abstract class BaseAbstractType implements TypeInterface
         return $value;
     }
 
+    public function isNullable()
+    {
+        return $this->isNullable;
+    }
+
     /**
      * Returns the string representation of a value.
      *
