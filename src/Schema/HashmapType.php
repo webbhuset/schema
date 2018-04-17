@@ -193,10 +193,10 @@ abstract class BaseHashmapType extends AbstractType
         $keyIntersect = array_intersect_key($new, $old);
         foreach ($keyIntersect as $key => $newValue) {
             $diff = $this->valueType->diff($new[$key], $old[$key]);
-            if (isset($diff['+'])) {
+            if (array_key_exists('+', $diff)) {
                 $result['+'][$key] = $diff['+'];
             }
-            if (isset($diff['-'])) {
+            if (array_key_exists('-', $diff)) {
                 $result['-'][$key] = $diff['-'];
             }
         }
