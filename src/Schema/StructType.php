@@ -79,13 +79,19 @@ abstract class BaseStructType extends AbstractType
 
     public function cast($value)
     {
+        if ($value === null) {
+            $value = [];
+        }
+
         $result = [];
         foreach ($this->fields as $key => $type) {
             if ($this->skipEmpty && !array_key_exists($key, $value)) {
                 continue;
             }
 
-            $result[$key] = $type->cast($value[$key]);
+            $val = isset($value[$key]) ? $value[$key] : null;
+
+            $result[$key] = $type->cast($val);
         }
 
         return $result;
