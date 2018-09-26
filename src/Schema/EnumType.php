@@ -30,6 +30,10 @@ abstract class BaseEnumType extends AbstractType
         if (empty($this->values)) {
             throw new TypeException("No values in enumerated type.");
         }
+
+        if (!$this->caseSensitive) {
+            $this->values = array_map('mb_strtoupper', $this->values);
+        }
     }
 
     protected function _toArray()
@@ -66,11 +70,13 @@ abstract class BaseEnumType extends AbstractType
             return false;
         }
 
-        $inArray = in_array($value, $this->values, true);
-        $inArrayCaseInsensitive = $this->caseSensitive === false
-            && in_array(mb_strtoupper($value), $this->values, true);
+        if ($this->caseSensitive) {
+            $inArray = in_array($value, $this->values, true);
+        } else {
+            $inArray = in_array(mb_strtoupper($value), $this->values, true);
+        }
 
-        if (!$inArray && !$inArrayCaseInsensitive) {
+        if (!$inArray) {
             $string = $this->getValueString($value);
 
             return "Value '{$string}' is not among the enumerated values.";

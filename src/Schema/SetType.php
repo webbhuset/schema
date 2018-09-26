@@ -117,11 +117,11 @@ abstract class BaseSetType extends AbstractType
         }
 
         $errors     = [];
-        foreach ($valueArray as $value) {
-            $tmpError = $this->type->getErrors($value);
+        foreach ($valueArray as $idx => $value) {
+            $valueErrors = $this->type->getErrors($value);
 
-            if ($tmpError !== false) {
-                $errors[] = $tmpError;
+            if ($valueErrors !== false) {
+                $errors[$idx] = $valueErrors;
             }
         }
 

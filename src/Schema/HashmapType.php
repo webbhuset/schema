@@ -128,21 +128,17 @@ abstract class BaseHashmapType extends AbstractType
         }
 
         $errors = [];
-        foreach ($dataArray as $dataKey => $dataValue) {
-            $tmpError = $this->keyType->getErrors($dataKey);
-            if ($tmpError !== false) {
-                if (is_array($tmpError)) {
-                    $tmpError = implode(', ', $tmpError);
-                }
-                $errors[] = "Hashmap key error: {$tmpError}";
+        foreach ($dataArray as $key => $value) {
+            $keyErrors = $this->keyType->getErrors($key);
+
+            if ($keyErrors !== false) {
+                $errors[$key]['key'] = $keyErrors;
             }
 
-            $tmpError = $this->valueType->getErrors($dataValue);
-            if ($tmpError !== false) {
-                if (is_array($tmpError)) {
-                    $tmpError = implode(', ', $tmpError);
-                }
-                $errors[] = "Hashmap value error for key '{$dataKey}': {$tmpError}";
+            $valueErrors = $this->valueType->getErrors($value);
+
+            if ($valueErrors !== false) {
+                $errors[$key]['value'] = $valueErrors;
             }
         }
 

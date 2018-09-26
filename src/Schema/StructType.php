@@ -119,13 +119,10 @@ abstract class BaseStructType extends AbstractType
                 }
             }
 
-            $tmpError = $type->getErrors($value[$key]);
+            $keyErrors = $type->getErrors($value[$key]);
 
-            if ($tmpError !== false) {
-                if (is_array($tmpError)) {
-                    $tmpError = implode(', ', $tmpError);
-                }
-                $errors[] = "Struct error for key '{$key}': {$tmpError}";
+            if ($keyErrors !== false) {
+                $errors[$key] = $keyErrors;
             }
 
             unset($value[$key]);
@@ -133,7 +130,7 @@ abstract class BaseStructType extends AbstractType
 
         if (!$this->allowUndefined) {
             foreach ($value as $key => $val) {
-                $errors[] = "Unknown key '{$key}'";
+                $errors[$key] = "Undefined key.";
             }
         }
 
