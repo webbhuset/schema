@@ -66,6 +66,12 @@ abstract class BaseAbstractType implements TypeInterface
         if (is_null($value)) {
             return '<NULL>';
         }
+        if ($value === true) {
+            return '<TRUE>';
+        }
+        if ($value === false) {
+            return '<FALSE>';
+        }
 
         return (string)$value;
     }
