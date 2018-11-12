@@ -33,7 +33,7 @@ abstract class BaseFunctionType extends AbstractType
         }
 
         if (!is_callable($value)) {
-            return "Value is not callable function";
+            return "Value is not callable function.";
         }
 
         return false;

@@ -8,7 +8,7 @@ use Webbhuset\Data\Schema\TypeConstructor as T;
 class DateType extends StringType
 {
     protected $matches = [
-        '/^\d{4}-\d{2}-\d{2}$/' => 'Date is not in format "YYYY-MM-DD',
+        '/^\d{4}-\d{2}-\d{2}$/' => "Date is not in format 'YYYY-MM-DD'.",
     ];
 
 

@@ -65,14 +65,16 @@ abstract class BaseUnionType extends AbstractType
 
         foreach ($this->types as $type) {
             $errors = $type->getErrors($value);
+
             if ($errors === false) {
                 $oneTypeMatches = true;
+
                 break;
             }
         }
 
         if (!$oneTypeMatches) {
-            return "Value is not of any type in the union";
+            return "Value is not of any type in the union.";
         }
 
         return false;

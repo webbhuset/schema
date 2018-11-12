@@ -64,15 +64,15 @@ abstract class BaseIntType extends AbstractType
 
         if (!is_integer($value)) {
             $string = $this->getValueString($value);
-            return "Not a valid integer: '{$string}'";
+            return "Not a valid integer: '{$string}'.";
         }
 
         if (isset($this->min) && $value < $this->min) {
-            return "Integer value is too small, min value allowed is {$this->min}: '{$value}'";
+            return "Integer value is too small, min value allowed is {$this->min}: '{$value}'.";
         }
 
         if (isset($this->max) && $value > $this->max) {
-            return "Integer value is too big, max value allowed is {$this->max}: '{$value}'";
+            return "Integer value is too big, max value allowed is {$this->max}: '{$value}'.";
         }
 
         return false;

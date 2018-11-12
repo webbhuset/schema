@@ -65,15 +65,15 @@ abstract class BaseFloatType extends AbstractType
 
         if (!is_float($value)) {
             $string = $this->getValueString($value);
-            return "Not a valid float: '{$string}'";
+            return "Not a valid float: '{$string}'.";
         }
 
         if (isset($this->min) && $value <= $this->min) {
-            return "Float value is too small, min value allowed is {$this->min}: '{$value}'";
+            return "Float value is too small, min value allowed is {$this->min}: '{$value}'.";
         }
 
         if (isset($this->max) && $value >= $this->max) {
-            return "Float value is too big, max value allowed is {$this->max}: '{$value}'";
+            return "Float value is too big, max value allowed is {$this->max}: '{$value}'.";
         }
 
         return false;

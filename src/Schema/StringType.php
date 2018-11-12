@@ -96,15 +96,15 @@ abstract class BaseStringType extends AbstractType
 
         if (!is_string($value)) {
             $string = $this->getValueString($value);
-            return "Not a valid string: '{$string}'";
+            return "Not a valid string: '{$string}'.";
         }
 
         if ($this->minLen >= 0 && mb_strlen($value) < $this->minLen) {
-            return "String is too short, min length allowed is {$this->minLen}: '{$value}'";
+            return "String is too short, min length allowed is {$this->minLen}: '{$value}'.";
         }
 
         if ($this->maxLen >= 0 && mb_strlen($value) > $this->maxLen) {
-            return "String is too long, max length allowed is {$this->maxLen}: '{$value}'";
+            return "String is too long, max length allowed is {$this->maxLen}: '{$value}'.";
         }
 
         foreach ($this->matches as $regex => $message) {

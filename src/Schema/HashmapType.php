@@ -115,16 +115,16 @@ abstract class BaseHashmapType extends AbstractType
 
         if (!is_array($dataArray)) {
             $string = $this->getValueString($dataArray);
-            return "Not a valid array: '{$string}'";
+            return "Not a valid array: '{$string}'.";
         }
 
         $size = count($dataArray);
         if (isset($this->min) && $size < $this->min) {
-            return "Too few items; min amount allowed is {$this->min}: '{$size}'";
+            return "Too few items; min amount allowed is {$this->min}: '{$size}'.";
         }
 
         if (isset($this->max) && $size > $this->max) {
-            return "Too many items, max amount allowed is {$this->max}: '{$size}'";
+            return "Too many items, max amount allowed is {$this->max}: '{$size}'.";
         }
 
         $errors = [];

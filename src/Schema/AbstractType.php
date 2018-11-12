@@ -27,7 +27,7 @@ abstract class BaseAbstractType implements TypeInterface
     public function getErrors($value)
     {
         if (is_null($value) && !$this->isNullable) {
-            return "Value is required";
+            return "Value is required.";
         }
 
         return false;

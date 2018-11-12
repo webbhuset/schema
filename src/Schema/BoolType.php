@@ -39,7 +39,7 @@ abstract class BaseBoolType extends AbstractType
         if (!is_bool($value)) {
             $string = $this->getValueString($value);
 
-            return "Not a valid boolean: '{$string}'";
+            return "Not a valid boolean: '{$string}'.";
         }
 
         return false;

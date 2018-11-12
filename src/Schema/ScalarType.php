@@ -39,7 +39,7 @@ abstract class BaseScalarType extends AbstractType
         if (!is_scalar($value)) {
             $string = $this->getValueString($value);
 
-            return "Not a valid scalar value: '{$string}'";
+            return "Not a valid scalar value: '{$string}'.";
         }
 
         return false;

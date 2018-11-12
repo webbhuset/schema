@@ -105,7 +105,8 @@ abstract class BaseStructType extends AbstractType
 
         if (!is_array($value)) {
             $string = $this->getValueString($value);
-            return "Not a valid array: '{$string}'";
+
+            return "Not a valid array: '{$string}'.";
         }
 
         $errors = [];

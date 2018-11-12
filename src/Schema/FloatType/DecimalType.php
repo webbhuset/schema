@@ -36,7 +36,7 @@ class BaseDecimalType extends FloatType
 
         $rounded = round($value, $this->decimalCount);
         if (abs($rounded - $value) > 1e-9) {
-            return "Too many decimals, max {$this->decimalCount} allowed: {$value}";
+            return "Too many decimals, max {$this->decimalCount} allowed: '{$value}'.";
         }
 
         return false;

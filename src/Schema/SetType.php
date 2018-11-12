@@ -99,21 +99,21 @@ abstract class BaseSetType extends AbstractType
 
         if (!is_array($valueArray)) {
             $string = $this->getValueString($valueArray);
-            return "Not a valid array: '{$string}'";
+            return "Not a valid array: '{$string}'.";
         }
 
         $size = count($valueArray);
         if ($size !== count(array_unique($valueArray, SORT_REGULAR))) {
             $string = $this->getValueString($valueArray);
-            return "Values must be unique";
+            return "Values must be unique.";
         }
 
         if (isset($this->min) && $size < $this->min) {
-            return "Set size is too small, min size allowed is {$this->min}: '{$size}'";
+            return "Set size is too small, min size allowed is {$this->min}: '{$size}'.";
         }
 
         if (isset($this->max) && $size > $this->max) {
-            return "Set size is too big, max size allowed is {$this->max}: '{$size}'";
+            return "Set size is too big, max size allowed is {$this->max}: '{$size}'.";
         }
 
         $errors     = [];

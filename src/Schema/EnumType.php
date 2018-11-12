@@ -14,6 +14,7 @@ abstract class BaseEnumType extends AbstractType
     {
         if (is_array($arg)) {
             $this->values = $arg;
+
             return;
         }
 
@@ -72,7 +73,7 @@ abstract class BaseEnumType extends AbstractType
         if (!$inArray && !$inArrayCaseInsensitive) {
             $string = $this->getValueString($value);
 
-            return "Value '{$string}' is not among the enumerated values";
+            return "Value '{$string}' is not among the enumerated values.";
         }
 
         return false;

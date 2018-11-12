@@ -40,14 +40,14 @@ abstract class BaseArraySchemaType extends AbstractType
             'type' => T::String(),
             'args' => T::Hashmap(T::String(), T::Any()),
         ]);
-        if ($error = $valueSchema->getErrors($value)) {
-            return $error;
+        if ($errors = $valueSchema->getErrors($value)) {
+            return $errors;
         }
 
         try {
             $arraySchema = T::getArraySchema($value['type']);
         } catch (TypeException $e) {
-            return "Unknown type '{$value['type']}'";
+            return "Unknown type '{$value['type']}'.";
         }
 
         return $arraySchema->getErrors($value);
