@@ -5,6 +5,7 @@ namespace Webbhuset\Schema\Simple;
 use Webbhuset\Schema\Constructor as S;
 use Webbhuset\Schema\AbstractSchema;
 use Webbhuset\Schema\Composite\StructSchema;
+use Webbhuset\Schema\SchemaInterface;
 
 class IntSchema extends AbstractSchema
 {
@@ -31,13 +32,13 @@ class IntSchema extends AbstractSchema
         }
 
         if ($this->min !== null && $this->max !== null && $this->min > $this->max) {
-            throw new \Exception();
+            throw new \InvalidArgumentException();
         }
     }
 
-    public static function fromArray(array $array): self
+    public static function fromArray(array $array): SchemaInterface
     {
-        $this->validateArraySchema($array);
+        static::validateArraySchema($array);
 
         $args = $array['args'];
 

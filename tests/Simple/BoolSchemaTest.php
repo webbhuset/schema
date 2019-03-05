@@ -11,84 +11,84 @@ final class BoolSchemaTest extends \PHPUnit\Framework\TestCase
         $schema = S::Bool();
 
         $this->assertSame(
-            $schema->cast(true),
-            true
+            true,
+            $schema->cast(true)
         );
 
         $this->assertSame(
-            $schema->cast(false),
-            false
+            false,
+            $schema->cast(false)
         );
 
         $this->assertSame(
-            $schema->cast(1),
-            true
+            true,
+            $schema->cast(1)
         );
 
         $this->assertSame(
-            $schema->cast(0),
-            false
+            false,
+            $schema->cast(0)
         );
 
         $this->assertSame(
-            $schema->cast(2),
-            2
+            2,
+            $schema->cast(2)
         );
 
         $this->assertSame(
-            $schema->cast('1'),
-            true
+            true,
+            $schema->cast('1')
         );
 
         $this->assertSame(
-            $schema->cast('0'),
-            false
+            false,
+            $schema->cast('0')
         );
 
         $this->assertSame(
-            $schema->cast('2'),
-            '2'
+            '2',
+            $schema->cast('2')
         );
 
         $this->assertSame(
-            $schema->cast('-0'),
-            '-0'
+            '-0',
+            $schema->cast('-0')
         );
 
         $this->assertSame(
-            $schema->cast('true'),
-            'true'
+            'true',
+            $schema->cast('true')
         );
 
         $this->assertSame(
-            $schema->cast('false'),
-            'false'
+            'false',
+            $schema->cast('false')
         );
 
         $this->assertSame(
-            $schema->cast('abc'),
-            'abc'
+            'abc',
+            $schema->cast('abc')
         );
 
         $this->assertSame(
-            $schema->cast(null),
-            false
+            false,
+            $schema->cast(null)
         );
 
         $this->assertSame(
-            $schema->cast([]),
-            []
+            [],
+            $schema->cast([])
         );
 
         $this->assertSame(
-            $schema->cast([1, 2, 3]),
-            [1, 2, 3]
+            [1, 2, 3],
+            $schema->cast([1, 2, 3])
         );
 
         $obj = new \stdClass();
         $this->assertSame(
-            $schema->cast($obj),
-            $obj
+            $obj,
+            $schema->cast($obj)
         );
     }
 
@@ -97,8 +97,8 @@ final class BoolSchemaTest extends \PHPUnit\Framework\TestCase
         $schema = S::Bool([S::NULLABLE]);
 
         $this->assertSame(
-            $schema->cast(null),
-            null
+            null,
+            $schema->cast(null)
         );
     }
 
@@ -109,8 +109,8 @@ final class BoolSchemaTest extends \PHPUnit\Framework\TestCase
         $arraySchema = $schema::getArraySchema();
 
         $this->assertSame(
-            $arraySchema->validate($array),
-            []
+            [],
+            $arraySchema->validate($array)
         );
     }
 }

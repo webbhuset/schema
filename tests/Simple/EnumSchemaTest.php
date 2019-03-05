@@ -17,8 +17,8 @@ final class EnumSchemaTest extends \PHPUnit\Framework\TestCase
         $schema = S::Enum([1, 2, 3], [S::NULLABLE]);
 
         $this->assertSame(
-            $schema->cast(null),
-            null
+            null,
+            $schema->cast(null)
         );
     }
 
@@ -29,8 +29,8 @@ final class EnumSchemaTest extends \PHPUnit\Framework\TestCase
         $arraySchema = $schema::getArraySchema();
 
         $this->assertSame(
-            $arraySchema->validate($array),
-            []
+            [],
+            $arraySchema->validate($array)
         );
     }
 }

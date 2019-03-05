@@ -5,6 +5,7 @@ namespace Webbhuset\Schema\Simple;
 use Webbhuset\Schema\Constructor as S;
 use Webbhuset\Schema\AbstractSchema;
 use Webbhuset\Schema\Composite\StructSchema;
+use Webbhuset\Schema\SchemaInterface;
 
 class BoolSchema extends AbstractSchema
 {
@@ -13,9 +14,9 @@ class BoolSchema extends AbstractSchema
         parent::__construct($args);
     }
 
-    public static function fromArray(array $array): self
+    public static function fromArray(array $array): SchemaInterface
     {
-        $this->validateArraySchema($array);
+        static::validateArraySchema($array);
 
         $args = $array['args'];
 

@@ -39,7 +39,7 @@ class StructSchema extends AbstractSchema
         }
     }
 
-    public static function fromArray(array $array)
+    public static function fromArray(array $array): SchemaInterface
     {
         $this->validateArraySchema($array);
 
@@ -51,10 +51,10 @@ class StructSchema extends AbstractSchema
         return S::Struct([
             'type' => S::Enum(['struct']),
             'args' => S::Struct([
-                'nullable'  => S::Bool([S::NULLABLE]),
                 'fields'            => S::Hashmap(S::Scalar(), S::ArraySchema(), [S::MIN(1)]),
-                'skipEmpty'         => S::Bool([S::NULLABLE]),
-                'allowUndefined'    => S::Bool([S::NULLABLE]),
+                'nullable'          => S::Bool([S::NULLABLE]),
+                'skip_empty'        => S::Bool([S::NULLABLE]),
+                'allow_undefined'   => S::Bool([S::NULLABLE]),
             ]),
         ]);
     }
@@ -64,12 +64,12 @@ class StructSchema extends AbstractSchema
         return [
             'type'  => 'struct',
             'args'  => [
-                'nullable'          => $this->isNullable,
                 'fields'            => array_map(function($schema) {
                     return $schema->toArray();
                 }, $this->fields),
-                'skipEmpty'         => $this->skipEmpty,
-                'allowUndefined'    => $this->allowUndefined,
+                'nullable'          => $this->isNullable,
+                'skip_empty'        => $this->skipEmpty,
+                'allow_undefined'   => $this->allowUndefined,
             ],
         ];
     }

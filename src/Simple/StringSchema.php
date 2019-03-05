@@ -5,6 +5,7 @@ namespace Webbhuset\Schema\Simple;
 use Webbhuset\Schema\AbstractSchema;
 use Webbhuset\Schema\Composite\StructSchema;
 use Webbhuset\Schema\Constructor as S;
+use Webbhuset\Schema\SchemaInterface;
 
 class StringSchema extends AbstractSchema
 {
@@ -30,9 +31,17 @@ class StringSchema extends AbstractSchema
 
         foreach ($args as $arg) {
             if (is_array($arg) && isset($arg[S::ARG_KEY_MIN]) && is_numeric($arg[S::ARG_KEY_MIN])) {
-                $this->min = (int)$arg[ARG_KEY_MIN];
+                $value = (int)$arg[S::ARG_KEY_MIN];
+                if ($value < 0) {
+                    throw new \InvalidArgumentException();
+                }
+                $this->min = $value;
             } elseif (is_array($arg) && isset($arg[S::ARG_KEY_MAX]) && is_numeric($arg[S::ARG_KEY_MAX])) {
-                $this->max = (int)$arg[ARG_KEY_MAX];
+                $value = (int)$arg[S::ARG_KEY_MAX];
+                if ($value < 0) {
+                    throw new \InvalidArgumentException();
+                }
+                $this->max = $value;
             } elseif (is_array($arg) && isset($arg[S::ARG_KEY_MATCH]) && is_array($arg[S::ARG_KEY_MATCH])) {
                 $this->matches = $arg[S::ARG_KEY_MATCH];
             } elseif ($arg === S::CASE_SENSITIVE) {
@@ -43,18 +52,18 @@ class StringSchema extends AbstractSchema
         }
     }
 
-    public static function fromArray(array $array): self
+    public static function fromArray(array $array): SchemaInterface
     {
-        $this->validateArraySchema($array);
+        static::validateArraySchema($array);
 
         $args = $array['args'];
 
         return new self([
             S::NULLABLE($args['nullable'] ?? static::DEFAULT_NULLABLE),
-            S::MIN($args['min'] ?? static::DEFAULT_MIN),
-            S::MAX($args['max'] ?? static::DEFAULT_MAX),
-            S::MATCH($args['matches'] ?? static::DEFAULT_MATCHES),
-            S::CASE_SENSITIVE($args['case_sensitive'] ?? static::DEFAULT_CASE_SENSITIVE),
+            isset($args['min']) ? S::MIN($args['min']) : null,
+            isset($args['max']) ? S::MAX($args['max']) : null,
+            isset($args['matches']) ? S::MATCH($args['matches']) : null,
+            isset($args['case_sensitive']) ? S::CASE_SENSITIVE($args['case_sensitive']) : null,
         ]);
     }
 

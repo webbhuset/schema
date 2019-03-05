@@ -11,99 +11,89 @@ final class IntSchemaTest extends \PHPUnit\Framework\TestCase
         $schema = S::Int();
 
         $this->assertSame(
-            $schema->cast(123),
-            123
+            123,
+            $schema->cast(123)
         );
 
         $this->assertSame(
-            $schema->cast('123'),
-            123
+            123,
+            $schema->cast('123')
         );
 
         $this->assertSame(
-            $schema->cast('-123'),
-            -123
+            -123,
+            $schema->cast('-123')
         );
 
         $this->assertSame(
-            $schema->cast('123abc'),
-            '123abc'
+            '123abc',
+            $schema->cast('123abc')
         );
 
         $this->assertSame(
-            $schema->cast(1.0),
-            1
+            1,
+            $schema->cast(1.0)
         );
 
         $this->assertSame(
-            $schema->cast('1.0'),
-            1
+            1,
+            $schema->cast('1.0')
         );
 
         $this->assertSame(
-            $schema->cast(1.1),
-            1.1
+            1.1,
+            $schema->cast(1.1)
         );
 
         $this->assertSame(
-            $schema->cast('1.1'),
-            '1.1'
+            '1.1',
+            $schema->cast('1.1')
         );
 
         $this->assertSame(
-            $schema->cast('abc'),
-            'abc'
+            'abc',
+            $schema->cast('abc')
         );
 
         $this->assertSame(
-            $schema->cast(1e3),
-            1000
+            1000,
+            $schema->cast('1e3')
         );
 
         $this->assertSame(
-            $schema->cast(1e+3),
-            1000
+            1000,
+            $schema->cast('1e+3')
         );
 
         $this->assertSame(
-            $schema->cast('1e3'),
-            1000
+            -1000,
+            $schema->cast('-1e3')
         );
 
         $this->assertSame(
-            $schema->cast('1e+3'),
-            1000
+            1,
+            $schema->cast(true)
         );
 
         $this->assertSame(
-            $schema->cast('-1e3'),
-            -1000
+            0,
+            $schema->cast(false)
         );
 
         $this->assertSame(
-            $schema->cast(true),
-            1
+            0,
+            $schema->cast(null)
         );
 
         $this->assertSame(
-            $schema->cast(false),
-            0
-        );
-
-        $this->assertSame(
-            $schema->cast(null),
-            0
-        );
-
-        $this->assertSame(
-            $schema->cast([1, 2, 3]),
-            [1, 2, 3]
+            [1, 2, 3],
+            $schema->cast([1, 2, 3])
         );
 
         $obj = new \stdClass();
         $this->assertSame(
-            $schema->cast($obj),
-            $obj
+            $obj,
+            $schema->cast($obj)
         );
     }
 
@@ -112,8 +102,8 @@ final class IntSchemaTest extends \PHPUnit\Framework\TestCase
         $schema = S::Int([S::NULLABLE]);
 
         $this->assertSame(
-            $schema->cast(null),
-            null
+            null,
+            $schema->cast(null)
         );
     }
 
@@ -124,8 +114,31 @@ final class IntSchemaTest extends \PHPUnit\Framework\TestCase
         $arraySchema = $schema::getArraySchema();
 
         $this->assertSame(
-            $arraySchema->validate($array),
-            []
+            [],
+            $arraySchema->validate($array)
+        );
+    }
+
+    public function testFromArray()
+    {
+        $this->assertInstanceOf(
+            \Webbhuset\Schema\Simple\IntSchema::class,
+            S::fromArray([
+                'type' => 'int',
+                'args' => [],
+            ])
+        );
+
+        $this->assertInstanceOf(
+            \Webbhuset\Schema\Simple\IntSchema::class,
+            S::fromArray([
+                'type' => 'int',
+                'args' => [
+                    'nullable' => true,
+                    'min' => 0,
+                    'max' => 10,
+                ],
+            ])
         );
     }
 }

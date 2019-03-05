@@ -11,54 +11,54 @@ final class StringSchemaTest extends \PHPUnit\Framework\TestCase
         $schema = S::String();
 
         $this->assertSame(
-            $schema->cast('abc'),
-            'abc'
+            'abc',
+            $schema->cast('abc')
         );
 
         $this->assertSame(
-            $schema->cast(123),
-            '123'
+            '123',
+            $schema->cast(123)
         );
 
         $this->assertSame(
-            $schema->cast(-123),
-            '-123'
+            '-123',
+            $schema->cast(-123)
         );
 
         $this->assertSame(
-            $schema->cast(1.0),
-            '1'
+            '1',
+            $schema->cast(1.0)
         );
 
         $this->assertSame(
-            $schema->cast(1.1),
-            '1.1'
+            '1.1',
+            $schema->cast(1.1)
         );
 
         $this->assertSame(
-            $schema->cast(true),
-            '1'
+            '1',
+            $schema->cast(true)
         );
 
         $this->assertSame(
-            $schema->cast(false),
-            ''
+            '',
+            $schema->cast(false)
         );
 
         $this->assertSame(
-            $schema->cast(null),
-            ''
+            '',
+            $schema->cast(null)
         );
 
         $this->assertSame(
-            $schema->cast([1, 2, 3]),
-            [1, 2, 3]
+            [1, 2, 3],
+            $schema->cast([1, 2, 3])
         );
 
         $obj = new \stdClass();
         $this->assertSame(
-            $schema->cast($obj),
-            $obj
+            $obj,
+            $schema->cast($obj)
         );
     }
 
@@ -67,8 +67,8 @@ final class StringSchemaTest extends \PHPUnit\Framework\TestCase
         $schema = S::Int([S::NULLABLE]);
 
         $this->assertSame(
-            $schema->cast(null),
-            null
+            null,
+            $schema->cast(null)
         );
     }
 
@@ -79,8 +79,32 @@ final class StringSchemaTest extends \PHPUnit\Framework\TestCase
         $arraySchema = $schema::getArraySchema();
 
         $this->assertSame(
-            $arraySchema->validate($array),
-            []
+            [],
+            $arraySchema->validate($array)
+        );
+    }
+
+    public function testFromArray()
+    {
+        $this->assertInstanceOf(
+            \Webbhuset\Schema\Simple\StringSchema::class,
+            S::fromArray([
+                'type' => 'string',
+                'args' => [],
+            ])
+        );
+
+        $this->assertInstanceOf(
+            \Webbhuset\Schema\Simple\StringSchema::class,
+            S::fromArray([
+                'type' => 'string',
+                'args' => [
+                    'nullable' => true,
+                    'min' => 1,
+                    'max' => 10,
+                    'case_sensitive' => false,
+                ],
+            ])
         );
     }
 }

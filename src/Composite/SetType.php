@@ -7,29 +7,23 @@ use Webbhuset\Schema\Composite\StructSchema;
 use Webbhuset\Schema\Constructor as S;
 use Webbhuset\Schema\SchemaInterface;
 
-class HashmapSchema extends AbstractSchema
+class SetSchema extends AbstractSchema
 {
     const DEFAULT_MIN = null;
     const DEFAULT_MAX = null;
 
-    protected $keySchema;
-    protected $valueSchema;
+    protected $schema;
     protected $min;
     protected $max;
 
 
-    public function __construct(SchemaInterface $keySchema, SchemaInterface $valueSchema, array $args = [])
+    public function __construct(SchemaInterface $schema, array $args = [])
     {
         parent::__construct($args);
 
-        $this->keySchema    = $keySchema;
-        $this->valueSchema  = $valueSchema;
-        $this->min          = static::DEFAULT_MIN;
-        $this->max          = static::DEFAULT_MAX;
-
-        if (false) { // TODO: Key is not scalar/simple?
-            throw new \InvalidArgumentException();
-        }
+        $this->schema   = $schema;
+        $this->min      = static::DEFAULT_MIN;
+        $this->max      = static::DEFAULT_MAX;
 
         foreach ($args as $arg) {
             if (is_array($arg) && isset($arg[S::ARG_KEY_MIN]) && is_numeric($arg[S::ARG_KEY_MIN])) {
@@ -46,10 +40,6 @@ class HashmapSchema extends AbstractSchema
                 $this->max = $value;
             }
         }
-
-        if ($this->min !== null && $this->max !== null && $this->min > $this->max) {
-            throw new \InvalidArgumentException();
-        }
     }
 
     public static function fromArray(array $array): SchemaInterface
@@ -59,8 +49,7 @@ class HashmapSchema extends AbstractSchema
         $args = $array['args'];
 
         return new self(
-            S::fromArray($args['key'] ?? []),
-            S::fromArray($args['value'] ?? []),
+            S::fromArray($args['schema'] ?? []),
             [
                 S::NULLABLE($args['nullable'] ?? static::DEFAULT_NULLABLE),
                 isset($args['min']) ? S::MIN($args['min']) : null,
@@ -72,10 +61,9 @@ class HashmapSchema extends AbstractSchema
     public static function getArraySchema(): StructSchema
     {
         return S::Struct([
-            'type' => S::Enum(['hashmap']),
+            'type' => S::Enum(['set']),
             'args' => S::Struct([
-                'key'       => S::ArraySchema(),
-                'value'     => S::ArraySchema(),
+                'schema'    => S::ArraySchema(),
                 'nullable'  => S::Bool([S::NULLABLE]),
                 'min'       => S::Int([S::NULLABLE]),
                 'max'       => S::Int([S::NULLABLE]),
@@ -86,30 +74,14 @@ class HashmapSchema extends AbstractSchema
     public function toArray(): array
     {
         return [
-            'type'  => 'hashmap',
+            'type'  => 'set',
             'args'  => [
-                'key'       => $this->keyType->toArray(),
-                'value'     => $this->valueType->toArray(),
+                'schema'    => $this->schema->toArray(),
                 'nullable'  => $this->nullable,
                 'min'       => $this->min,
                 'max'       => $this->max,
             ],
         ];
-    }
-
-    public function cast($value)
-    {
-
-    }
-
-    public function isEqual($a, $b): bool
-    {
-
-    }
-
-    public function diff($a, $b): array
-    {
-
     }
 
     public function validate($value): array
@@ -139,18 +111,8 @@ class HashmapSchema extends AbstractSchema
             ];
         }
 
-        $errors = [];
+        // TODO: If $this->schema is scalar, ensure uniqueness
 
-        foreach ($value as $k => $v) {
-            if ($keyErrors = $this->keySchema->validate($k)) {
-                $errors[$k]['key'] = $keyErrors;
-            }
-
-            if ($valueErrors = $this->valueSchema->validate($k)) {
-                $errors[$k]['value'] = $valueErrors;
-            }
-        }
-
-        return $errors;
+        return [];
     }
 }

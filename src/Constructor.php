@@ -18,6 +18,8 @@ class Constructor
     const ARG_KEY_ARRAY     = 'KEY_ARRAY';
     const ARG_KEY_DECIMALS  = 'KEY_DECIMALS';
 
+    // Args
+
     public static function NULLABLE(bool $flag)
     {
         return $flag ? static::NULLABLE : null;
@@ -58,6 +60,7 @@ class Constructor
         return [static::ARG_KEY_DECIMALS => $arg];
     }
 
+    // Simple schemas
 
     public static function Bool(array $args = []): Simple\BoolSchema
     {
@@ -84,6 +87,8 @@ class Constructor
         return new Simple\StringSchema($args);
     }
 
+    // Composite schemas
+
     public static function Hashmap(SchemaInterface $keySchema, SchemaInterface $valueSchema, array $args = []): Composite\HashmapSchema
     {
         return new Composite\HashmapSchema($keySchema, $valueSchema, $args);
@@ -92,5 +97,67 @@ class Constructor
     public static function Struct(array $schema, array $args = []): Composite\StructSchema
     {
         return new Composite\StructSchema($schema, $args);
+    }
+
+    // Utility schemas
+
+    public static function Any(array $args = []): Utility\AnySchema
+    {
+        return new Utility\AnySchema($args);
+    }
+
+    public static function ArraySchema(array $args = []): Utility\ArraySchemaSchema
+    {
+        return new Utility\ArraySchemaSchema($args);
+    }
+
+    // Utility functions
+
+    public static function fromArray(array $array): SchemaInterface
+    {
+        $type = $array['type'] ?? null;
+
+        $schema = static::ArraySchema();
+
+        if ($errors = $schema->validate($array)) {
+            throw new \InvalidArgumentException();
+        }
+
+        $class = static::getClassFromType($type);
+
+        return $class::fromArray($array);
+    }
+
+    public static function getArraySchema(string $type): Composite\StructSchema
+    {
+        $class = static::getClassFromType($type);
+
+        return $class::getArraySchema();
+    }
+
+    protected static function getClassFromType(string $type)
+    {
+        switch ($type) {
+            case 'bool':
+                return Simple\BoolSchema::class;
+            case 'enum':
+                return Simple\EnumSchema::class;
+            case 'float':
+                return Simple\FloatSchema::class;
+            case 'int':
+                return Simple\IntSchema::class;
+            case 'string':
+                return Simple\StringSchema::class;
+            case 'hashmap':
+                return Composite\HashmapSchema::class;
+            case 'struct':
+                return Composite\StructSchema::class;
+            case 'any':
+                return Utility\AnySchema::class;
+            case 'array_schema':
+                return Utility\ArraySchemaSchema::class;
+            default:
+                throw new \InvalidArgumentException();
+        }
     }
 }

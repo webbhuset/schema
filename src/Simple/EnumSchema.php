@@ -5,6 +5,7 @@ namespace Webbhuset\Schema\Simple;
 use Webbhuset\Schema\Constructor as S;
 use Webbhuset\Schema\AbstractSchema;
 use Webbhuset\Schema\Composite\StructSchema;
+use Webbhuset\Schema\SchemaInterface;
 
 class EnumSchema extends AbstractSchema
 {
@@ -41,9 +42,9 @@ class EnumSchema extends AbstractSchema
         $this->values = $values;
     }
 
-    public static function fromArray(array $array): self
+    public static function fromArray(array $array): SchemaInterface
     {
-        $this->validateArraySchema($array);
+        static::validateArraySchema($array);
 
         $args = $array['args'];
 
