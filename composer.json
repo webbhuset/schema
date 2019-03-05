@@ -1,32 +1,23 @@
 {
-    "name": "webbhuset/data",
+    "name": "webbhuset/schema",
     "type": "library",
-    "license": "proprietary",
-    "description": "A library for data handling and validation.",
+    "license": "MIT",
+    "description": "A library for data validation.",
     "require": {
-        "php": "^5.5 | ^7.0"
+        "php": "^7.0",
+        "ext-mbstring": "*"
     },
     "require-dev": {
-        "webbhuset/test": "dev-master"
-    },
-    "config": {
-        "secure-http": false,
-        "minimum-stability": "dev"
+        "phpunit/phpunit": "^7"
     },
     "autoload": {
         "psr-4": {
-            "Webbhuset\\Data\\": "src/"
+            "Webbhuset\\Schema\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Webbhuset\\Data\\Test\\": "tests/"
+            "Webbhuset\\Schema\\Test\\": "tests/"
         }
-    },
-    "repositories": [
-        {
-            "type": "composer",
-            "url": "https://packages-php.webbhuset.com"
-        }
-    ]
+    }
 }
