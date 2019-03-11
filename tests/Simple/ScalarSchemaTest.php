@@ -4,11 +4,11 @@ namespace Webbhuset\Schema\Test\Simple;
 
 use Webbhuset\Schema\Constructor as S;
 
-final class BoolSchemaTest extends \PHPUnit\Framework\TestCase
+final class ScalarSchemaTest extends \PHPUnit\Framework\TestCase
 {
     public function testCast()
     {
-        $schema = S::Bool();
+        $schema = S::Scalar();
 
         $this->assertSame(
             true,
@@ -18,16 +18,6 @@ final class BoolSchemaTest extends \PHPUnit\Framework\TestCase
         $this->assertSame(
             false,
             $schema->cast(false)
-        );
-
-        $this->assertSame(
-            true,
-            $schema->cast(1)
-        );
-
-        $this->assertSame(
-            false,
-            $schema->cast(0)
         );
 
         $this->assertSame(
@@ -46,43 +36,8 @@ final class BoolSchemaTest extends \PHPUnit\Framework\TestCase
         );
 
         $this->assertSame(
-            true,
-            $schema->cast('1')
-        );
-
-        $this->assertSame(
-            false,
-            $schema->cast('0')
-        );
-
-        $this->assertSame(
-            '2',
-            $schema->cast('2')
-        );
-
-        $this->assertSame(
-            '-0',
-            $schema->cast('-0')
-        );
-
-        $this->assertSame(
-            'true',
-            $schema->cast('true')
-        );
-
-        $this->assertSame(
-            'false',
-            $schema->cast('false')
-        );
-
-        $this->assertSame(
             'abc',
             $schema->cast('abc')
-        );
-
-        $this->assertSame(
-            false,
-            $schema->cast(null)
         );
 
         $this->assertSame(
@@ -104,7 +59,7 @@ final class BoolSchemaTest extends \PHPUnit\Framework\TestCase
 
     public function testCastNullable()
     {
-        $schema = S::Bool([S::NULLABLE]);
+        $schema = S::Scalar([S::NULLABLE]);
 
         $this->assertSame(
             null,
@@ -114,7 +69,7 @@ final class BoolSchemaTest extends \PHPUnit\Framework\TestCase
 
     public function testArraySchema()
     {
-        $schema = S::Bool();
+        $schema = S::Scalar();
         $array = $schema->toArray();
         $arraySchema = $schema::getArraySchema();
 

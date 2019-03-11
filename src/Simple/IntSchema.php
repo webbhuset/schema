@@ -44,8 +44,8 @@ class IntSchema extends AbstractSchema
 
         return new self([
             S::NULLABLE($args['nullable'] ?? static::DEFAULT_NULLABLE),
-            S::MIN($args['min'] ?? static::DEFAULT_MIN),
-            S::MAX($args['max'] ?? static::DEFAULT_MAX),
+            isset($args['min']) ? S::MIN($args['min']) : null,
+            isset($args['max']) ? S::MAX($args['max']) : null,
         ]);
     }
 

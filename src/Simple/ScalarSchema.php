@@ -7,7 +7,7 @@ use Webbhuset\Schema\AbstractSchema;
 use Webbhuset\Schema\Composite\StructSchema;
 use Webbhuset\Schema\SchemaInterface;
 
-class BoolSchema extends AbstractSchema
+class ScalarSchema extends AbstractSchema
 {
     public static function fromArray(array $array): SchemaInterface
     {
@@ -23,7 +23,7 @@ class BoolSchema extends AbstractSchema
     public static function getArraySchema(): StructSchema
     {
         return S::Struct([
-            'type' => S::Enum(['bool']),
+            'type' => S::Enum(['scalar']),
             'args' => S::Struct([
                 'nullable' => S::Bool([S::NULLABLE]),
             ]),
@@ -33,28 +33,11 @@ class BoolSchema extends AbstractSchema
     public function toArray(): array
     {
         return [
-            'type' => 'bool',
+            'type' => 'scalar',
             'args' => [
                 'nullable' => $this->nullable,
             ],
         ];
-    }
-
-    public function cast($value)
-    {
-        if (is_bool($value)) {
-            return $value;
-        } elseif ($value === null && $this->nullable) {
-            return null;
-        } elseif ($value === null && !$this->nullable) {
-            return false;
-        } elseif ($value === 0 || $value === '0') {
-            return false;
-        } elseif ($value === 1 || $value === '1') {
-            return true;
-        } else {
-            return $value;
-        }
     }
 
     public function validate($value): array
@@ -67,8 +50,8 @@ class BoolSchema extends AbstractSchema
             return [];
         }
 
-        if (!is_bool($value)) {
-            return ['Value is not a bool.'];
+        if (!is_scalar($value)) {
+            return ['Value is not a scalar.'];
         }
 
         return [];

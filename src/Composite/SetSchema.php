@@ -99,6 +99,7 @@ class SetSchema extends AbstractSchema
         }
 
         $size = count($value);
+
         if ($this->min !== null && $size < $this->min) {
             return [
                 sprintf('Value has too few elements, min amount allowed is %s.', $this->min),

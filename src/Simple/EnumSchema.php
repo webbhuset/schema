@@ -35,7 +35,7 @@ class EnumSchema extends AbstractSchema
                     }
                 }
 
-                $values = array_map('mb_strtoupper', $value);
+                $values = array_map('mb_strtoupper', $values);
             }
         }
 
@@ -59,7 +59,14 @@ class EnumSchema extends AbstractSchema
 
     public static function getArraySchema(): StructSchema
     {
-
+        return S::Struct([
+            'type' => S::Enum(['enum']),
+            'args' => S::Struct([
+                'values'            => S::Set(S::Any()),
+                'nullable'          => S::Bool([S::NULLABLE]),
+                'case_sensitive'    => S::Bool([S::NULLABLE]),
+            ]),
+        ]);
     }
 
     public function toArray(): array
@@ -67,8 +74,8 @@ class EnumSchema extends AbstractSchema
         return [
             'type' => 'enum',
             'args' => [
-                'nullable'          => $this->nullable,
                 'values'            => $this->values,
+                'nullable'          => $this->nullable,
                 'case_sensitive'    => $this->caseSensitive,
             ],
         ];
@@ -82,6 +89,18 @@ class EnumSchema extends AbstractSchema
 
         if ($value === null) {
             return [];
+        }
+
+        if ($this->caseSensitive) {
+            $inArray = in_array($value, $this->values, true);
+        } elseif (is_string($value)) {
+            $inArray = in_array(mb_strtoupper($value), $this->values, true);
+        } else {
+            $inArray = false;
+        }
+
+        if (!$inArray) {
+            return ['Value is not among the enumerated values.'];
         }
 
         return [];

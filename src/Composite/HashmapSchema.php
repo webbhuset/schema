@@ -97,21 +97,6 @@ class HashmapSchema extends AbstractSchema
         ];
     }
 
-    public function cast($value)
-    {
-
-    }
-
-    public function isEqual($a, $b): bool
-    {
-
-    }
-
-    public function diff($a, $b): array
-    {
-
-    }
-
     public function validate($value): array
     {
         if ($errors = parent::validate($value)) {

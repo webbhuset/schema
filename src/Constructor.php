@@ -67,9 +67,9 @@ class Constructor
         return new Simple\BoolSchema($args);
     }
 
-    public static function Enum(array $args = []): Simple\EnumSchema
+    public static function Enum(array $values, array $args = []): Simple\EnumSchema
     {
-        return new Simple\EnumSchema($args);
+        return new Simple\EnumSchema($values, $args);
     }
 
     public static function Float(array $args = []): Simple\FloatSchema
@@ -80,6 +80,11 @@ class Constructor
     public static function Int(array $args = []): Simple\IntSchema
     {
         return new Simple\IntSchema($args);
+    }
+
+    public static function Scalar(array $args = []): Simple\ScalarSchema
+    {
+        return new Simple\ScalarSchema($args);
     }
 
     public static function String(array $args = []): Simple\StringSchema
@@ -94,9 +99,14 @@ class Constructor
         return new Composite\HashmapSchema($keySchema, $valueSchema, $args);
     }
 
-    public static function Struct(array $schema, array $args = []): Composite\StructSchema
+    public static function Set(SchemaInterface $schema, array $args = []): Composite\SetSchema
     {
-        return new Composite\StructSchema($schema, $args);
+        return new Composite\SetSchema($schema, $args);
+    }
+
+    public static function Struct(array $fields, array $args = []): Composite\StructSchema
+    {
+        return new Composite\StructSchema($fields, $args);
     }
 
     // Utility schemas
