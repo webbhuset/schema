@@ -41,7 +41,7 @@ final class StringSchemaTest extends \PHPUnit\Framework\TestCase
         );
 
         $this->assertSame(
-            '',
+            '0',
             $schema->cast(false)
         );
 

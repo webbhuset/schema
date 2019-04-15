@@ -9,15 +9,13 @@ use Webbhuset\Schema\SchemaInterface;
 
 class StringSchema extends AbstractSchema
 {
-    const DEFAULT_MIN               = null;
-    const DEFAULT_MAX               = null;
-    const DEFAULT_MATCHES           = [];
-    const DEFAULT_CASE_SENSITIVE    = true;
+    const DEFAULT_MIN       = null;
+    const DEFAULT_MAX       = null;
+    const DEFAULT_MATCHES   = [];
 
     protected $min;
     protected $max;
     protected $matches;
-    protected $caseSensitive;
 
 
     public function __construct(array $args = [])
@@ -27,7 +25,6 @@ class StringSchema extends AbstractSchema
         $this->min              = static::DEFAULT_MIN;
         $this->max              = static::DEFAULT_MAX;
         $this->matches          = static::DEFAULT_MATCHES;
-        $this->caseSensitive    = static::DEFAULT_CASE_SENSITIVE;
 
         foreach ($args as $arg) {
             if (is_array($arg) && isset($arg[S::ARG_KEY_MIN]) && is_numeric($arg[S::ARG_KEY_MIN])) {
@@ -44,10 +41,6 @@ class StringSchema extends AbstractSchema
                 $this->max = $value;
             } elseif (is_array($arg) && isset($arg[S::ARG_KEY_MATCH]) && is_array($arg[S::ARG_KEY_MATCH])) {
                 $this->matches = $arg[S::ARG_KEY_MATCH];
-            } elseif ($arg === S::CASE_SENSITIVE) {
-                $this->caseSensitive = true;
-            } elseif ($arg === S::CASE_INSENSITIVE) {
-                $this->caseSensitive = false;
             }
         }
     }
@@ -63,7 +56,6 @@ class StringSchema extends AbstractSchema
             isset($args['min']) ? S::MIN($args['min']) : null,
             isset($args['max']) ? S::MAX($args['max']) : null,
             isset($args['matches']) ? S::MATCH($args['matches']) : null,
-            isset($args['case_sensitive']) ? S::CASE_SENSITIVE($args['case_sensitive']) : null,
         ]);
     }
 
@@ -72,11 +64,10 @@ class StringSchema extends AbstractSchema
         return S::Struct([
             'type' => S::Enum(['string']),
             'args' => S::Struct([
-                'nullable'          => S::Bool([S::NULLABLE]),
-                'min'               => S::Int([S::NULLABLE, S::MIN(0)]),
-                'max'               => S::Int([S::NULLABLE, S::MIN(0)]),
-                'matches'           => S::Hashmap(S::String(), S::String(), [S::NULLABLE]),
-                'case_sensitive'    => S::Bool([S::NULLABLE]),
+                'nullable'  => S::Bool([S::NULLABLE]),
+                'min'       => S::Int([S::NULLABLE, S::MIN(0)]),
+                'max'       => S::Int([S::NULLABLE, S::MIN(0)]),
+                'matches'   => S::Hashmap(S::String(), S::String(), [S::NULLABLE]),
             ]),
         ]);
     }
@@ -90,7 +81,6 @@ class StringSchema extends AbstractSchema
                 'min'               => $this->min,
                 'max'               => $this->max,
                 'matches'           => $this->matches,
-                'case_sensitive'    => $this->caseSensitive,
             ],
         ];
     }
@@ -103,6 +93,8 @@ class StringSchema extends AbstractSchema
             return null;
         } elseif ($value === null && !$this->nullable) {
             return '';
+        } elseif (is_bool($value)) {
+            return $value ? '1' : '0';
         } elseif (is_scalar($value)) {
             return (string)$value;
         } else {

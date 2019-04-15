@@ -8,10 +8,10 @@ use Webbhuset\Schema\Composite;
 class Constructor
 {
     const NULLABLE          = 'NULLABLE';
-    const CASE_SENSITIVE    = 'CASE_SENSITIVE';
-    const CASE_INSENSITIVE  = 'CASE_INSENSITIVE';
     const SKIP_EMPTY        = 'SKIP_EMPTY';
     const ALLOW_UNDEFINED   = 'ALLOW_UNDEFINED';
+    const CASE_SENSITIVE    = 'CASE_SENSITIVE';
+    const CASE_INSENSITIVE  = 'CASE_INSENSITIVE';
     const ARG_KEY_MIN       = 'KEY_MIN';
     const ARG_KEY_MAX       = 'KEY_MAX';
     const ARG_KEY_MATCH     = 'KEY_MATCH';

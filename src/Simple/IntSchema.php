@@ -54,9 +54,9 @@ class IntSchema extends AbstractSchema
         return S::Struct([
             'type' => S::Enum(['int']),
             'args' => S::Struct([
-                'nullable'      => S::Bool([S::NULLABLE]),
-                'min'           => S::Int([S::NULLABLE]),
-                'max'           => S::Int([S::NULLABLE]),
+                'nullable'  => S::Bool([S::NULLABLE]),
+                'min'       => S::Int([S::NULLABLE]),
+                'max'       => S::Int([S::NULLABLE]),
             ]),
         ]);
     }
