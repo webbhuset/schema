@@ -1,7 +1,7 @@
 String
 ======
 
-String
+StringSchema validates string values.
 
 
 Constructor

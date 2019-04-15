@@ -8,10 +8,13 @@ use Webbhuset\Schema\Composite;
 class Constructor
 {
     const NULLABLE          = 'NULLABLE';
-    const SKIP_EMPTY        = 'SKIP_EMPTY';
+    const ERROR_ON_MISSING  = 'ERROR_ON_MISSING';
+    const SKIP_MISSING      = 'SKIP_MISSING';
+    const MISSING_AS_NULL   = 'MISSING_AS_NULL';
     const ALLOW_UNDEFINED   = 'ALLOW_UNDEFINED';
     const CASE_SENSITIVE    = 'CASE_SENSITIVE';
     const CASE_INSENSITIVE  = 'CASE_INSENSITIVE';
+    const ARG_KEY_MISSING   = 'KEY_MISSING';
     const ARG_KEY_MIN       = 'KEY_MIN';
     const ARG_KEY_MAX       = 'KEY_MAX';
     const ARG_KEY_MATCH     = 'KEY_MATCH';
@@ -25,14 +28,14 @@ class Constructor
         return $flag ? static::NULLABLE : null;
     }
 
-    public static function SKIP_EMPTY(bool $flag)
-    {
-        return $flag ? static::SKIP_EMPTY : null;
-    }
-
     public static function ALLOW_UNDEFINED(bool $flag)
     {
         return $flag ? static::ALLOW_UNDEFINED : null;
+    }
+
+    public static function MISSING(string $mode): array
+    {
+        return [static::ARG_KEY_MISSING => $mode];
     }
 
     public static function MIN(int $arg): array

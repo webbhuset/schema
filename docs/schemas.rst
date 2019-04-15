@@ -34,6 +34,12 @@ Composite Types
     :hidden:
     :maxdepth: 1
 
+    schemas/hashmap
+    schemas/struct
+
+* :doc:`/schemas/hashmap` - Validate hashmap values.
+* :doc:`/schemas/struct` - Validate struct values.
+
 
 .. _utility-types:
 
