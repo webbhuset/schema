@@ -73,25 +73,34 @@ class FloatSchema extends AbstractSchema
         ];
     }
 
-    public function cast($value)
+    public function validate($value, bool $strict = true): ?float
     {
-        if (is_float($value)) {
-            return $value;
-        } elseif ($value === null && $this->nullable) {
-            return null;
-        } elseif ($value === null && !$this->nullable) {
-            return 0.0;
-        } elseif (is_numeric($value)) {
-            return (float)$value;
-        } else {
-            return $value;
+        if (!is_float($value)) {
+            if ($strict) {
+                throw new \Webbhuset\Schema\ValidationException(['Value must be a float.']);
+            } elseif ($value === null) {
+                $value = 0.0;
+            } elseif (is_bool($value)) {
+                $value = $value ? 1.0 : 0.0;
+            } elseif (is_numeric($value)) {
+                $value = (float)$value;
+            } else {
+                throw new \Webbhuset\Schema\ValidationException(['Value must be coercible to a float.']);
+            }
         }
-    }
 
-    public function validate($value): array
-    {
-        if ($errors = parent::validate($value)) {
-            return $errors;
+        if ($this->min !== null && $strlen < $this->min) {
+            throw new \Webbhuset\Schema\ValidationException([
+                sprintf('Value must be at least %s.', $this->min),
+            ]);
         }
+
+        if ($this->max !== null && $strlen > $this->max) {
+            throw new \Webbhuset\Schema\ValidationException([
+                sprintf('Value must be at most %s.', $this->max),
+            ]);
+        }
+
+        return $value;
     }
 }

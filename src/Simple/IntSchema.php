@@ -54,9 +54,9 @@ class IntSchema extends AbstractSchema
         return S::Struct([
             'type' => S::Enum(['int']),
             'args' => S::Struct([
-                'nullable'  => S::Bool([S::NULLABLE]),
-                'min'       => S::Int([S::NULLABLE]),
-                'max'       => S::Int([S::NULLABLE]),
+                'nullable' => S::Bool([S::NULLABLE]),
+                'min' => S::Int([S::NULLABLE]),
+                'max' => S::Int([S::NULLABLE]),
             ]),
         ]);
     }
@@ -66,48 +66,47 @@ class IntSchema extends AbstractSchema
         return [
             'type' => 'int',
             'args' => [
-                'nullable'  => $this->nullable,
-                'min'       => $this->min,
-                'max'       => $this->max,
+                'nullable' => $this->nullable,
+                'min' => $this->min,
+                'max' => $this->max,
             ],
         ];
     }
 
-    public function cast($value)
+    public function validate($value, bool $strict = true): int
     {
-        if (is_int($value)) {
-            return $value;
-        } elseif ($value === null && $this->nullable) {
-            return null;
-        } elseif ($value === null && !$this->nullable) {
-            return 0;
-        } elseif (ctype_digit($value)) {
-            return (int)$value;
-        } elseif (is_numeric($value)) {
-            $cast = (int)$value;
-
-            return $cast == $value ? $cast : $value;
-        } elseif (is_bool($value)) {
-            return (int)$value;
-        } else {
-            return $value;
-        }
-    }
-
-    public function validate($value): array
-    {
-        if ($errors = parent::validate($value)) {
-            return $errors;
-        }
-
-        if ($value === null) {
-            return [];
-        }
-
         if (!is_int($value)) {
-            return ['Value is not an int.'];
+            if ($strict) {
+                throw new \Webbhuset\Schema\ValidationException(['Value must be an int.']);
+            } elseif ($value === null) {
+                $value = 0;
+            } elseif (is_bool($value)) {
+                $value = $value ? 1 : 0;
+            } elseif (is_numeric($value)) {
+                $cast = (int)$value;
+
+                if ($cast == $value) {
+                    $value = $cast;
+                } else {
+                    throw new \Webbhuset\Schema\ValidationException(['Value must be coercible to an int.']);
+                }
+            } else {
+                throw new \Webbhuset\Schema\ValidationException(['Value must be coercible to an int.']);
+            }
         }
 
-        return [];
+        if ($this->min !== null && $strlen < $this->min) {
+            throw new \Webbhuset\Schema\ValidationException([
+                sprintf('Value must be at least %s.', $this->min),
+            ]);
+        }
+
+        if ($this->max !== null && $strlen > $this->max) {
+            throw new \Webbhuset\Schema\ValidationException([
+                sprintf('Value must be at most %s.', $this->max),
+            ]);
+        }
+
+        return $value;
     }
 }

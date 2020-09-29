@@ -20,8 +20,6 @@ class StringSchema extends AbstractSchema
 
     public function __construct(array $args = [])
     {
-        parent::__construct($args);
-
         $this->min              = static::DEFAULT_MIN;
         $this->max              = static::DEFAULT_MAX;
         $this->matches          = static::DEFAULT_MATCHES;
@@ -77,66 +75,58 @@ class StringSchema extends AbstractSchema
         return [
             'type' => 'string',
             'args' => [
-                'nullable'          => $this->nullable,
-                'min'               => $this->min,
-                'max'               => $this->max,
-                'matches'           => $this->matches,
+                'nullable' => $this->nullable,
+                'min' => $this->min,
+                'max' => $this->max,
+                'matches' => $this->matches,
             ],
         ];
     }
 
-    public function cast($value)
+    public function validate($value, bool $strict = true): string
     {
-        if (is_string($value)) {
-            return $value;
-        } elseif ($value === null && $this->nullable) {
-            return null;
-        } elseif ($value === null && !$this->nullable) {
-            return '';
-        } elseif (is_bool($value)) {
-            return $value ? '1' : '0';
-        } elseif (is_scalar($value)) {
-            return (string)$value;
-        } else {
-            return $value;
-        }
-    }
-
-    public function validate($value): array
-    {
-        if ($errors = parent::validate($value)) {
-            return $errors;
-        }
-
-        if ($value === null) {
-            return [];
-        }
-
         if (!is_string($value)) {
-            return ['Value is not a string.'];
+            if ($strict) {
+                throw new \Webbhuset\Schema\ValidationException(['Value must be a string.']);
+            } elseif ($value === null) {
+                $value = '';
+            } elseif (is_bool($value)) {
+                $value = $value ? '1' : '0';
+            } elseif (is_scalar($value)) {
+                $value = (string)$value;
+            } else {
+                throw new \Webbhuset\Schema\ValidationException(['Value must be a scalar.']);
+            }
         }
 
         $strlen = mb_strlen($value);
         if ($this->min !== null && $strlen < $this->min) {
-            return [
-                sprintf('String is too short, min length allowed is %s.', $this->min),
-            ];
+            throw new \Webbhuset\Schema\ValidationException([
+                sprintf('Value must be at least %s characters.', $this->min),
+            ]);
         }
 
         if ($this->max !== null && $strlen > $this->max) {
-            return [
-                sprintf('String is too short, max length allowed is %s.', $this->max),
-            ];
+            throw new \Webbhuset\Schema\ValidationException([
+                sprintf('Value must be at most %s characters.', $this->max),
+            ]);
         }
 
+        // TODO: Only allow one
         foreach ($this->matches as $regex => $message) {
             if (!preg_match($regex, $value)) {
-                return [
-                    $message,
-                ];
+                if ($message) {
+                    throw new \Webbhuset\Schema\ValidationException([
+                        sprintf('Value must match %s (%s).', $regex, $message),
+                    ]);
+                } else {
+                    throw new \Webbhuset\Schema\ValidationException([
+                        sprintf('Value must match %s.', $regex),
+                    ]);
+                }
             }
         }
 
-        return [];
+        return $value;
     }
 }

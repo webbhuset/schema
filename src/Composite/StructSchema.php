@@ -87,28 +87,23 @@ class StructSchema extends AbstractSchema
         ];
     }
 
-    public function validate($value): array
+    public function validate($value, bool $strict = true): array
     {
-        if ($errors = parent::validate($value)) {
-            return $errors;
-        }
-
-        if ($value === null) {
-            return [];
-        }
-
         if (!is_array($value)) {
-            return ['Value is not an array.'];
+            if ($strict) {
+                throw new \Webbhuset\Schema\ValidationException(['Value must be an array.']);
+            } else {
+                $value = [];
+            }
         }
 
         $errors = [];
-
         foreach ($this->fields as $key => $schema) {
             if (!array_key_exists($key, $value)) {
                 switch ($this->missing) {
                     case S::ERROR_ON_MISSING:
-                        $errors[$key] = ['Missing value.'];
-                        break;
+                        $errors[$key] = ['Value must be set.'];
+                        continue 2;
 
                     case S::SKIP_MISSING:
                         continue 2;
@@ -119,21 +114,24 @@ class StructSchema extends AbstractSchema
                 }
             }
 
-            $fieldErrors = $schema->validate($value[$key]);
-
-            if ($fieldErrors) {
-                $errors[$key] = $fieldErrors;
+            try {
+                $value[$key] = $schema->validate($value[$key], $strict);
+            } catch (\Webbhuset\Schema\ValidationException $e) {
+                $errors[$key] = $e->getValidationErrors();
             }
 
-            unset($value[$key]);
         }
 
         if (!$this->allowUndefined) {
-            foreach ($value as $key => $val) {
-                $errors[$key] = ['Undefined key.'];
+            foreach (array_diff_key($value, $this->fields) as $key => $v) {
+                $errors[$key] = ['Value must not be set (undefined key).'];
             }
         }
 
-        return $errors;
+        if ($errors) {
+            throw new \Webbhuset\Schema\ValidationException($errors);
+        }
+
+        return $value;
     }
 }

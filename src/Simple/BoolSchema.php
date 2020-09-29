@@ -40,37 +40,16 @@ class BoolSchema extends AbstractSchema
         ];
     }
 
-    public function cast($value)
+    public function validate($value, bool $strict = true): bool
     {
-        if (is_bool($value)) {
-            return $value;
-        } elseif ($value === null && $this->nullable) {
-            return null;
-        } elseif ($value === null && !$this->nullable) {
-            return false;
-        } elseif ($value === 0 || $value === '0') {
-            return false;
-        } elseif ($value === 1 || $value === '1') {
-            return true;
-        } else {
-            return $value;
-        }
-    }
-
-    public function validate($value): array
-    {
-        if ($errors = parent::validate($value)) {
-            return $errors;
-        }
-
-        if ($value === null) {
-            return [];
-        }
-
         if (!is_bool($value)) {
-            return ['Value is not a bool.'];
+            if ($strict) {
+                throw new \Webbhuset\Schema\ValidationException(['Value must be a bool.']);
+            } else {
+                $value = (bool)$value;
+            }
         }
 
-        return [];
+        return $value;
     }
 }

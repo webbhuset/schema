@@ -2,12 +2,9 @@
 
 namespace Webbhuset\Schema\Composite;
 
-use Webbhuset\Schema\AbstractSchema;
-use Webbhuset\Schema\Composite\StructSchema;
 use Webbhuset\Schema\Constructor as S;
-use Webbhuset\Schema\SchemaInterface;
 
-class HashmapSchema extends AbstractSchema
+class DictSchema extends \Webbhuset\Schema\AbstractSchema
 {
     const DEFAULT_MIN = null;
     const DEFAULT_MAX = null;
@@ -18,14 +15,17 @@ class HashmapSchema extends AbstractSchema
     protected $max;
 
 
-    public function __construct(SchemaInterface $keySchema, SchemaInterface $valueSchema, array $args = [])
-    {
+    public function __construct(
+        \Webbhuset\Schema\SchemaInterface $keySchema,
+        \Webbhuset\Schema\SchemaInterface $valueSchema,
+        array $args = []
+    ) {
         parent::__construct($args);
 
-        $this->keySchema    = $keySchema;
-        $this->valueSchema  = $valueSchema;
-        $this->min          = static::DEFAULT_MIN;
-        $this->max          = static::DEFAULT_MAX;
+        $this->keySchema = $keySchema;
+        $this->valueSchema = $valueSchema;
+        $this->min = static::DEFAULT_MIN;
+        $this->max = static::DEFAULT_MAX;
 
         if (false) { // TODO: Key is not scalar/simple?
             throw new \InvalidArgumentException();
@@ -52,7 +52,7 @@ class HashmapSchema extends AbstractSchema
         }
     }
 
-    public static function fromArray(array $array): SchemaInterface
+    public static function fromArray(array $array): \Webbhuset\Schema\SchemaInterface
     {
         static::validateArraySchema($array);
 
@@ -69,7 +69,7 @@ class HashmapSchema extends AbstractSchema
         );
     }
 
-    public static function getArraySchema(): StructSchema
+    public static function getArraySchema(): \Webbhuset\Schema\Composite\StructSchema
     {
         return S::Struct([
             'type' => S::Enum(['hashmap']),

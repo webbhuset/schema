@@ -63,68 +63,68 @@ class Constructor
         return [static::ARG_KEY_DECIMALS => $arg];
     }
 
-    // Simple schemas
+    // \Webbhuset\Schema\Simple schemas
 
-    public static function Bool(array $args = []): Simple\BoolSchema
+    public static function Bool(array $args = []): \Webbhuset\Schema\Simple\BoolSchema
     {
-        return new Simple\BoolSchema($args);
+        return new \Webbhuset\Schema\Simple\BoolSchema($args);
     }
 
-    public static function Enum(array $values, array $args = []): Simple\EnumSchema
+    public static function Enum(array $values, array $args = []): \Webbhuset\Schema\Simple\EnumSchema
     {
-        return new Simple\EnumSchema($values, $args);
+        return new \Webbhuset\Schema\Simple\EnumSchema($values, $args);
     }
 
-    public static function Float(array $args = []): Simple\FloatSchema
+    public static function Float(array $args = []): \Webbhuset\Schema\Simple\FloatSchema
     {
-        return new Simple\FloatSchema($args);
+        return new \Webbhuset\Schema\Simple\FloatSchema($args);
     }
 
-    public static function Int(array $args = []): Simple\IntSchema
+    public static function Int(array $args = []): \Webbhuset\Schema\Simple\IntSchema
     {
-        return new Simple\IntSchema($args);
+        return new \Webbhuset\Schema\Simple\IntSchema($args);
     }
 
-    public static function Scalar(array $args = []): Simple\ScalarSchema
+    public static function Scalar(array $args = []): \Webbhuset\Schema\Simple\ScalarSchema
     {
-        return new Simple\ScalarSchema($args);
+        return new \Webbhuset\Schema\Simple\ScalarSchema($args);
     }
 
-    public static function String(array $args = []): Simple\StringSchema
+    public static function String(array $args = []): \Webbhuset\Schema\Simple\StringSchema
     {
-        return new Simple\StringSchema($args);
+        return new \Webbhuset\Schema\Simple\StringSchema($args);
     }
 
-    // Composite schemas
+    // \Webbhuset\Schema\Composite schemas
 
-    public static function Hashmap(SchemaInterface $keySchema, SchemaInterface $valueSchema, array $args = []): Composite\HashmapSchema
+    public static function Hashmap(SchemaInterface $keySchema, SchemaInterface $valueSchema, array $args = []): \Webbhuset\Schema\Composite\HashmapSchema
     {
-        return new Composite\HashmapSchema($keySchema, $valueSchema, $args);
+        return new \Webbhuset\Schema\Composite\HashmapSchema($keySchema, $valueSchema, $args);
     }
 
-    public static function Set(SchemaInterface $schema, array $args = []): Composite\SetSchema
+    public static function Set(SchemaInterface $schema, array $args = []): \Webbhuset\Schema\Composite\SetSchema
     {
-        return new Composite\SetSchema($schema, $args);
+        return new \Webbhuset\Schema\Composite\SetSchema($schema, $args);
     }
 
-    public static function Struct(array $fields, array $args = []): Composite\StructSchema
+    public static function Struct(array $fields, array $args = []): \Webbhuset\Schema\Composite\StructSchema
     {
-        return new Composite\StructSchema($fields, $args);
+        return new \Webbhuset\Schema\Composite\StructSchema($fields, $args);
     }
 
-    // Utility schemas
+    // \Webbhuset\Schema\Utility schemas
 
-    public static function Any(array $args = []): Utility\AnySchema
+    public static function Any(array $args = []): \Webbhuset\Schema\Utility\AnySchema
     {
-        return new Utility\AnySchema($args);
+        return new \Webbhuset\Schema\Utility\AnySchema($args);
     }
 
-    public static function ArraySchema(array $args = []): Utility\ArraySchemaSchema
+    public static function ArraySchema(array $args = []): \Webbhuset\Schema\Utility\ArraySchemaSchema
     {
-        return new Utility\ArraySchemaSchema($args);
+        return new \Webbhuset\Schema\Utility\ArraySchemaSchema($args);
     }
 
-    // Utility functions
+    // \Webbhuset\Schema\Utility functions
 
     public static function fromArray(array $array): SchemaInterface
     {
@@ -141,36 +141,36 @@ class Constructor
         return $class::fromArray($array);
     }
 
-    public static function getArraySchema(string $type): Composite\StructSchema
+    public static function getArraySchema(string $type): \Webbhuset\Schema\Composite\StructSchema
     {
         $class = static::getClassFromType($type);
 
         return $class::getArraySchema();
     }
 
-    protected static function getClassFromType(string $type)
+    protected static function getClassFromType(string $type): string
     {
         switch ($type) {
             case 'bool':
-                return Simple\BoolSchema::class;
+                return \Webbhuset\Schema\Simple\BoolSchema::class;
             case 'enum':
-                return Simple\EnumSchema::class;
+                return \Webbhuset\Schema\Simple\EnumSchema::class;
             case 'float':
-                return Simple\FloatSchema::class;
+                return \Webbhuset\Schema\Simple\FloatSchema::class;
             case 'int':
-                return Simple\IntSchema::class;
+                return \Webbhuset\Schema\Simple\IntSchema::class;
             case 'string':
-                return Simple\StringSchema::class;
+                return \Webbhuset\Schema\Simple\StringSchema::class;
             case 'hashmap':
-                return Composite\HashmapSchema::class;
+                return \Webbhuset\Schema\Composite\HashmapSchema::class;
             case 'struct':
-                return Composite\StructSchema::class;
+                return \Webbhuset\Schema\Composite\StructSchema::class;
             case 'any':
-                return Utility\AnySchema::class;
+                return \Webbhuset\Schema\Utility\AnySchema::class;
             case 'array_schema':
-                return Utility\ArraySchemaSchema::class;
+                return \Webbhuset\Schema\Utility\ArraySchemaSchema::class;
             default:
-                throw new \InvalidArgumentException();
+                throw new \InvalidArgumentException("Unknown type '{$type}'.");
         }
     }
 }

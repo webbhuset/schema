@@ -9,6 +9,5 @@ interface SchemaInterface
     static function fromArray(array $array): SchemaInterface;
     static function getArraySchema(): StructSchema;
     function toArray(): array;
-    function cast($value);
-    function validate($value): array;
+    function validate($value, bool $strict = true);
 }

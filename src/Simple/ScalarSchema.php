@@ -40,20 +40,16 @@ class ScalarSchema extends AbstractSchema
         ];
     }
 
-    public function validate($value): array
+    public function validate($value, bool $strict = true): array
     {
-        if ($errors = parent::validate($value)) {
-            return $errors;
-        }
-
-        if ($value === null) {
-            return [];
-        }
-
         if (!is_scalar($value)) {
-            return ['Value is not a scalar.'];
+            if ($strict) {
+                throw new \Webbhuset\Schema\ValidationException(['Value must be a scalar.']);
+            } elseif ($value === null) {
+                $value = '';
+            }
         }
 
-        return [];
+        return $value;
     }
 }
