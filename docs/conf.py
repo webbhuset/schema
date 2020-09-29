@@ -178,3 +178,5 @@ epub_exclude_files = ['search.html']
 
 lexers["php"] = PhpLexer(startinline=True, linenos=1)
 lexers["php-annotations"] = PhpLexer(startinline=True, linenos=1)
+
+highlight_language = 'php'

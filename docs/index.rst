@@ -8,7 +8,7 @@ Welcome to Schema's documentation!
 
 .. toctree::
     :includehidden:
-    :maxdepth: 3
+    :maxdepth: 4
     :caption: Table of Contents:
 
     constructor

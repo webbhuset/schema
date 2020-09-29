@@ -1,10 +1,10 @@
 <?php
 
-namespace Webbhuset\Schema\Simple;
+namespace Webbhuset\Schema;
 
 use Webbhuset\Schema\Constructor as S;
 
-class NullableSchema extends \Webbhuset\Schema\AbstractSchema
+class NullableSchema implements \Webbhuset\Schema\SchemaInterface
 {
     protected $schema;
 
@@ -16,21 +16,17 @@ class NullableSchema extends \Webbhuset\Schema\AbstractSchema
 
     public static function fromArray(array $array): \Webbhuset\Schema\SchemaInterface
     {
-        static::validateArraySchema($array);
+        static::getArraySchema()->validate($array);
 
-        $args = $array['args'];
+        $schema = new self($array['args']['schema']);
 
-        return new self([
-            S::NULLABLE($args['nullable'] ?? static::DEFAULT_NULLABLE),
-            isset($args['min']) ? S::MIN($args['min']) : null,
-            isset($args['max']) ? S::MAX($args['max']) : null,
-        ]);
+        return $schema;
     }
 
-    public static function getArraySchema(): \Webbhuset\Schema\Composite\StructSchema
+    public static function getArraySchema(): \Webbhuset\Schema\StructSchema
     {
         return S::Struct([
-            'type' => S::Enum(['int']),
+            'type' => S::String()->regex('/nullable/'),
             'args' => S::Struct([
                 'schema' => S::ArraySchema(),
             ]),
@@ -52,7 +48,13 @@ class NullableSchema extends \Webbhuset\Schema\AbstractSchema
         if ($value === null) {
             return $value;
         } else {
-            return $this->schema->validate($value, $strict);
+            try {
+                return $this->schema->validate($value, $strict);
+            } catch (\Webbhuset\Schema\ValidationException $e) {
+                throw new \Webbhuset\Schema\ValidationException([
+                    'Value must be null or match the following:' => $e->getValidationErrors(),
+                ]);
+            }
         }
     }
 }

@@ -10,19 +10,17 @@ Simple Types
     :hidden:
     :maxdepth: 1
 
+    schemas/any
     schemas/bool
     schemas/float
-    schemas/enum
     schemas/int
-    schemas/scalar
     schemas/string
 
-* :doc:`/schemas/bool` - Validates boolean values.
-* :doc:`/schemas/float` - Validates float values.
-* :doc:`/schemas/enum` - Validates that values are one of a defined list of values.
-* :doc:`/schemas/int` - Validates integer values.
-* :doc:`/schemas/scalar` - Validates scalar (i.e. int, string, float, or boolean) values.
-* :doc:`/schemas/string` - Validates string values.
+* :doc:`/schemas/any` - Validates nothing (validation always succeeds).
+* :doc:`/schemas/bool` - Validates that the input is a boolean.
+* :doc:`/schemas/float` - Validates that the input is a float.
+* :doc:`/schemas/int` - Validates that the input is an int.
+* :doc:`/schemas/string` - Validates that the input is a string.
 
 
 .. _composite-types:
@@ -34,18 +32,24 @@ Composite Types
     :hidden:
     :maxdepth: 1
 
-    schemas/hashmap
+    schemas/dict
+    schemas/one_of
     schemas/struct
 
-* :doc:`/schemas/hashmap` - Validate hashmap values.
-* :doc:`/schemas/struct` - Validate struct values.
+* :doc:`/schemas/dict` - Validates that the input is an array with keys and values of specified schemas.
+* :doc:`/schemas/one_of` - Validates that the input matches at least one of a list of schemas.
+* :doc:`/schemas/struct` - Validates that the input is an array with specified fields.
 
 
-.. _utility-types:
+.. _meta-types:
 
-Utility Types
+Meta Types
 -------------
 
 .. toctree::
     :hidden:
     :maxdepth: 1
+
+    schemas/array_schema
+
+* :doc:`/schemas/array_schema` - Validates that input is valid for fromArray.

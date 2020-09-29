@@ -4,50 +4,54 @@ Int
 IntSchema validates integer values.
 
 
-Constructor
------------
+Functions
+---------
+
+__construct
+___________
 
 .. code-block:: php
 
-    __construct ( [ array $args = [] ] )
+    __construct ()
 
-.. _args:
 
-:ref:`args <args>`
-    Optional arguments:
+min
+___
 
-    .. _nullable:
+.. code-block:: php
 
-    bool :ref:`NULLABLE <nullable>`
-        Whether null values are allowed. Default value: :code:`false`.
+    min ( int $min ) : self
 
-    .. _min:
+Set minimum value.
 
-    int :ref:`MIN <min>`
-        Minimum allowed value. Default value: :code:`null`.
 
-    .. _max:
+max
+___
 
-    int :ref:`MAX <max>`
-        Maximum allowed value. Default value: :code:`null`.
+.. code-block:: php
+
+    max ( int $max ) : self
+
+Set maximum value.
+
+
+.. include:: ../shared_functions.rst
+
+Running :code:`validate()` with :code:`$strict = false` will do the following coercions:
+
+- Floats are converted if the decimal value is 0 (e.g. :code:`1.0` would be converted to :code:`1`, while :code:`1.1` would not be converted).
+- Strings are converted if they represent a valid integer, e.g. :code:`"123"`, :code:`"1e3"`, :code:`"-5"` are valid, while :code:`"123abc"`, :code:`"1.1"` are not.
+- Bools are converted to :code:`1` when :code:`true` and :code:`0` when :code:`false`.
+- :code:`null` is converted to :code:`0`.
+- Other values are not converted.
 
 
 Array Schema
 ------------
 
-.. literalinclude:: /../src/Simple/IntSchema.php
+.. literalinclude:: /../src/IntSchema.php
     :language: php
     :lines: 54-61
     :dedent: 8
 
 
-Casting
--------
-
-The :code:`cast()` function will attempt to convert values to an integer.
-
-- Floats are converted if the decimal value is 0, e.g. 1.0 would be converted to 1, while 1.1 would not be converted.
-- Strings are converted if they represent a valid integer, e.g. "123", "1e3", "-5" are valid, while "123abc", "1.1" are not.
-- Bools are converted to 1 and 0 for true and false, respectively.
-- Null is converted to 0 if :ref:`NULLABLE <nullable>` is false, otherwise left as null.
-- Other values are not converted.

@@ -2,9 +2,10 @@
     "name": "webbhuset/schema",
     "type": "library",
     "license": "MIT",
-    "description": "A library for data validation.",
+    "description": "A library for data cleaning and validation.",
     "require": {
-        "php": "^7.0",
+        "php": "^7.1",
+        "ext-json": "*",
         "ext-mbstring": "*"
     },
     "require-dev": {

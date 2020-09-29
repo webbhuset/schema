@@ -2,146 +2,73 @@
 
 namespace Webbhuset\Schema;
 
-use Webbhuset\Schema\Simple;
-use Webbhuset\Schema\Composite;
-
 class Constructor
 {
-    const NULLABLE          = 'NULLABLE';
-    const ERROR_ON_MISSING  = 'ERROR_ON_MISSING';
-    const SKIP_MISSING      = 'SKIP_MISSING';
-    const MISSING_AS_NULL   = 'MISSING_AS_NULL';
-    const ALLOW_UNDEFINED   = 'ALLOW_UNDEFINED';
-    const CASE_SENSITIVE    = 'CASE_SENSITIVE';
-    const CASE_INSENSITIVE  = 'CASE_INSENSITIVE';
-    const ARG_KEY_MISSING   = 'KEY_MISSING';
-    const ARG_KEY_MIN       = 'KEY_MIN';
-    const ARG_KEY_MAX       = 'KEY_MAX';
-    const ARG_KEY_MATCH     = 'KEY_MATCH';
-    const ARG_KEY_ARRAY     = 'KEY_ARRAY';
-    const ARG_KEY_DECIMALS  = 'KEY_DECIMALS';
-
-    // Args
-
-    public static function NULLABLE(bool $flag)
+    public static function Any(): \Webbhuset\Schema\AnySchema
     {
-        return $flag ? static::NULLABLE : null;
+        return new \Webbhuset\Schema\AnySchema();
     }
 
-    public static function ALLOW_UNDEFINED(bool $flag)
+    public static function ArraySchema(): \Webbhuset\Schema\ArraySchemaSchema
     {
-        return $flag ? static::ALLOW_UNDEFINED : null;
+        return new \Webbhuset\Schema\ArraySchemaSchema();
     }
 
-    public static function MISSING(string $mode): array
+    public static function Bool(): \Webbhuset\Schema\BoolSchema
     {
-        return [static::ARG_KEY_MISSING => $mode];
+        return new \Webbhuset\Schema\BoolSchema();
     }
 
-    public static function MIN(int $arg): array
+    public static function Dict(
+        \Webbhuset\Schema\SchemaInterface $keySchema,
+        \Webbhuset\Schema\SchemaInterface $valueSchema
+    ): \Webbhuset\Schema\DictSchema
     {
-        return [static::ARG_KEY_MIN => $arg];
+        return new \Webbhuset\Schema\DictSchema($keySchema, $valueSchema);
     }
 
-    public static function MAX(int $arg): array
+    public static function Float(): \Webbhuset\Schema\FloatSchema
     {
-        return [static::ARG_KEY_MAX => $arg];
+        return new \Webbhuset\Schema\FloatSchema();
     }
 
-    public static function MATCH(array $arg): array
+    public static function Int(): \Webbhuset\Schema\IntSchema
     {
-        return [static::ARG_KEY_MATCH => $arg];
+        return new \Webbhuset\Schema\IntSchema();
     }
 
-    public static function CASE_SENSITIVE(bool $flag): string
+    public static function Nullable(\Webbhuset\Schema\SchemaInterface $schema): \Webbhuset\Schema\NullableSchema
     {
-        return $flag ? static::CASE_SENSITIVE : static::CASE_INSENSITIVE;
+        return new \Webbhuset\Schema\NullableSchema($schema);
     }
 
-    public static function DECIMALS(int $arg): array
+    public static function OneOf(array $schemas): \Webbhuset\Schema\OneOfSchema
     {
-        return [static::ARG_KEY_DECIMALS => $arg];
+        return new \Webbhuset\Schema\OneOfSchema($schemas);
     }
 
-    // \Webbhuset\Schema\Simple schemas
-
-    public static function Bool(array $args = []): \Webbhuset\Schema\Simple\BoolSchema
+    public static function String(): \Webbhuset\Schema\StringSchema
     {
-        return new \Webbhuset\Schema\Simple\BoolSchema($args);
+        return new \Webbhuset\Schema\StringSchema();
     }
 
-    public static function Enum(array $values, array $args = []): \Webbhuset\Schema\Simple\EnumSchema
+    public static function Struct(array $fields): \Webbhuset\Schema\StructSchema
     {
-        return new \Webbhuset\Schema\Simple\EnumSchema($values, $args);
+        return new \Webbhuset\Schema\StructSchema($fields);
     }
 
-    public static function Float(array $args = []): \Webbhuset\Schema\Simple\FloatSchema
+    public static function fromArray(array $array): \Webbhuset\Schema\SchemaInterface
     {
-        return new \Webbhuset\Schema\Simple\FloatSchema($args);
-    }
-
-    public static function Int(array $args = []): \Webbhuset\Schema\Simple\IntSchema
-    {
-        return new \Webbhuset\Schema\Simple\IntSchema($args);
-    }
-
-    public static function Scalar(array $args = []): \Webbhuset\Schema\Simple\ScalarSchema
-    {
-        return new \Webbhuset\Schema\Simple\ScalarSchema($args);
-    }
-
-    public static function String(array $args = []): \Webbhuset\Schema\Simple\StringSchema
-    {
-        return new \Webbhuset\Schema\Simple\StringSchema($args);
-    }
-
-    // \Webbhuset\Schema\Composite schemas
-
-    public static function Hashmap(SchemaInterface $keySchema, SchemaInterface $valueSchema, array $args = []): \Webbhuset\Schema\Composite\HashmapSchema
-    {
-        return new \Webbhuset\Schema\Composite\HashmapSchema($keySchema, $valueSchema, $args);
-    }
-
-    public static function Set(SchemaInterface $schema, array $args = []): \Webbhuset\Schema\Composite\SetSchema
-    {
-        return new \Webbhuset\Schema\Composite\SetSchema($schema, $args);
-    }
-
-    public static function Struct(array $fields, array $args = []): \Webbhuset\Schema\Composite\StructSchema
-    {
-        return new \Webbhuset\Schema\Composite\StructSchema($fields, $args);
-    }
-
-    // \Webbhuset\Schema\Utility schemas
-
-    public static function Any(array $args = []): \Webbhuset\Schema\Utility\AnySchema
-    {
-        return new \Webbhuset\Schema\Utility\AnySchema($args);
-    }
-
-    public static function ArraySchema(array $args = []): \Webbhuset\Schema\Utility\ArraySchemaSchema
-    {
-        return new \Webbhuset\Schema\Utility\ArraySchemaSchema($args);
-    }
-
-    // \Webbhuset\Schema\Utility functions
-
-    public static function fromArray(array $array): SchemaInterface
-    {
-        $type = $array['type'] ?? null;
-
         $schema = static::ArraySchema();
+        $schema->validate($array);
 
-        if ($errors = $schema->validate($array)) {
-            throw new \InvalidArgumentException();
-        }
-
+        $type = $array['type'] ?? null;
         $class = static::getClassFromType($type);
 
         return $class::fromArray($array);
     }
 
-    public static function getArraySchema(string $type): \Webbhuset\Schema\Composite\StructSchema
+    public static function getArraySchema(string $type): \Webbhuset\Schema\StructSchema
     {
         $class = static::getClassFromType($type);
 
@@ -151,24 +78,26 @@ class Constructor
     protected static function getClassFromType(string $type): string
     {
         switch ($type) {
-            case 'bool':
-                return \Webbhuset\Schema\Simple\BoolSchema::class;
-            case 'enum':
-                return \Webbhuset\Schema\Simple\EnumSchema::class;
-            case 'float':
-                return \Webbhuset\Schema\Simple\FloatSchema::class;
-            case 'int':
-                return \Webbhuset\Schema\Simple\IntSchema::class;
-            case 'string':
-                return \Webbhuset\Schema\Simple\StringSchema::class;
-            case 'hashmap':
-                return \Webbhuset\Schema\Composite\HashmapSchema::class;
-            case 'struct':
-                return \Webbhuset\Schema\Composite\StructSchema::class;
             case 'any':
-                return \Webbhuset\Schema\Utility\AnySchema::class;
+                return \Webbhuset\Schema\AnySchema::class;
             case 'array_schema':
-                return \Webbhuset\Schema\Utility\ArraySchemaSchema::class;
+                return \Webbhuset\Schema\ArraySchemaSchema::class;
+            case 'bool':
+                return \Webbhuset\Schema\BoolSchema::class;
+            case 'dict':
+                return \Webbhuset\Schema\DictSchema::class;
+            case 'float':
+                return \Webbhuset\Schema\FloatSchema::class;
+            case 'int':
+                return \Webbhuset\Schema\IntSchema::class;
+            case 'nullable':
+                return \Webbhuset\Schema\NullableSchema::class;
+            case 'one_of':
+                return \Webbhuset\Schema\OneOfSchema::class;
+            case 'string':
+                return \Webbhuset\Schema\StringSchema::class;
+            case 'struct':
+                return \Webbhuset\Schema\StructSchema::class;
             default:
                 throw new \InvalidArgumentException("Unknown type '{$type}'.");
         }

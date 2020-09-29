@@ -1,62 +1,63 @@
 <?php
 
-namespace Webbhuset\Schema\Simple;
+namespace Webbhuset\Schema;
 
 use Webbhuset\Schema\Constructor as S;
-use Webbhuset\Schema\AbstractSchema;
-use Webbhuset\Schema\Composite\StructSchema;
-use Webbhuset\Schema\SchemaInterface;
 
-class IntSchema extends AbstractSchema
+class IntSchema implements \Webbhuset\Schema\SchemaInterface
 {
-    const DEFAULT_MIN = null;
-    const DEFAULT_MAX = null;
-
     protected $min;
     protected $max;
 
 
-    public function __construct(array $args = [])
+    public function min(int $min): self
     {
-        parent::__construct($args);
-
-        $this->min = static::DEFAULT_MIN;
-        $this->max = static::DEFAULT_MAX;
-
-        foreach ($args as $arg) {
-            if (is_array($arg) && isset($arg[S::ARG_KEY_MIN]) && is_numeric($arg[S::ARG_KEY_MIN])) {
-                $this->min = (int)$arg[S::ARG_KEY_MIN];
-            } elseif (is_array($arg) && isset($arg[S::ARG_KEY_MAX]) && is_numeric($arg[S::ARG_KEY_MAX])) {
-                $this->max = (int)$arg[S::ARG_KEY_MAX];
-            }
+        if ($this->max !== null && $min > $this->max) {
+            throw new \InvalidArgumentException('Min cannot be lower than max.');
         }
 
-        if ($this->min !== null && $this->max !== null && $this->min > $this->max) {
-            throw new \InvalidArgumentException();
-        }
+        $clone = clone $this;
+        $clone->min = $min;
+
+        return $clone;
     }
 
-    public static function fromArray(array $array): SchemaInterface
+    public function max(int $max): self
     {
-        static::validateArraySchema($array);
+        if ($this->min !== null && $max < $this->min) {
+            throw new \InvalidArgumentException('Max cannot be lower than min.');
+        }
 
-        $args = $array['args'];
+        $clone = clone $this;
+        $clone->max = $max;
 
-        return new self([
-            S::NULLABLE($args['nullable'] ?? static::DEFAULT_NULLABLE),
-            isset($args['min']) ? S::MIN($args['min']) : null,
-            isset($args['max']) ? S::MAX($args['max']) : null,
-        ]);
+        return $clone;
     }
 
-    public static function getArraySchema(): StructSchema
+    public static function fromArray(array $array): \Webbhuset\Schema\SchemaInterface
+    {
+        static::getArraySchema()->validate($array);
+
+        $schema = new self();
+
+        if ($array['args']['min']) {
+            $schema->min = $array['args']['min'];
+        }
+
+        if ($array['args']['max']) {
+            $schema->max = $array['args']['max'];
+        }
+
+        return $schema;
+    }
+
+    public static function getArraySchema(): \Webbhuset\Schema\StructSchema
     {
         return S::Struct([
-            'type' => S::Enum(['int']),
+            'type' => S::String()->regex('/int/'),
             'args' => S::Struct([
-                'nullable' => S::Bool([S::NULLABLE]),
-                'min' => S::Int([S::NULLABLE]),
-                'max' => S::Int([S::NULLABLE]),
+                'min' => S::Nullable(S::Int()),
+                'max' => S::Nullable(S::Int()),
             ]),
         ]);
     }
@@ -66,7 +67,6 @@ class IntSchema extends AbstractSchema
         return [
             'type' => 'int',
             'args' => [
-                'nullable' => $this->nullable,
                 'min' => $this->min,
                 'max' => $this->max,
             ],

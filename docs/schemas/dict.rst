@@ -1,5 +1,5 @@
-Hashmap
-=======
+Dict
+====
 
 HashmapSchema validates collections of values with a specified key schema and value schema.
 
@@ -29,23 +29,26 @@ Constructor
     .. _nullable:
 
     bool :ref:`NULLABLE <nullable>`
-        Whether null values are allowed. Default value: :code:`false`.
+        Whether null values are allowed.
+        Default value: :code:`false`.
 
     .. _min:
 
     int :ref:`MIN <min>`
-        Minimum allowed amount of values. Default value: :code:`null`.
+        Minimum allowed amount of values.
+        Default value: :code:`null`.
 
     .. _max:
 
     int :ref:`MAX <max>`
-        Maximum allowed amount of values. Default value: :code:`null`.
+        Maximum allowed amount of values.
+        Default value: :code:`null`.
 
 
 Array Schema
 ------------
 
-.. literalinclude:: /../src/Composite/HashmapSchema.php
+.. literalinclude:: /../src/DictSchema.php
     :language: php
     :lines: 74-83
     :dedent: 8

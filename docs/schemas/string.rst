@@ -4,54 +4,62 @@ String
 StringSchema validates string values.
 
 
-Constructor
------------
+Functions
+---------
+
+__construct
+___________
 
 .. code-block:: php
 
-    __construct ( [ array $args = [] ] )
+    __construct ()
 
-.. _args:
 
-:ref:`args <args>`
-    Optional arguments:
+min
+___
 
-    .. _nullable:
+.. code-block:: php
 
-    bool :ref:`NULLABLE <nullable>`
-        Whether null values are allowed. Default value: :code:`false`.
+    min ( int $min ) : self
 
-    .. _min:
+Set minimum string length.
 
-    int :ref:`MIN <min>`
-        Minimum allowed length. Default value: :code:`null`.
 
-    .. _max:
+max
+___
 
-    int :ref:`MAX <max>`
-        Maximum allowed length. Default value: :code:`null`.
+.. code-block:: php
 
-    .. _matches:
+    max ( int $max ) : self
 
-    array :ref:`MATCHES <matches>`
-        Regex patterns that values must match. Default value :code:`[]`.
+Set maximum string length.
+
+
+regex
+_____
+
+.. code-block:: php
+
+    regex ( string $regex [, ?string $description = '' ] ) : self
+
+Set a regex the input must match. Optionally specify a description of the regex,
+which will be included in the error message if the input doesn't match.
+
+
+.. include:: ../shared_functions.rst
+
+Running :code:`validate()` with :code:`$strict = false` will do the following coercions:
+
+- Integers and floats are converted to their respective string representation.
+- Bools are converted to :code:`"1"` when :code:`true` and :code:`"0"` when :code:`false`.
+- :code:`null` is converted to :code:`""` (empty string).
+- Other values are not converted.
 
 
 Array Schema
 ------------
 
-.. literalinclude:: /../src/Simple/StringSchema.php
+.. literalinclude:: /../src/StringSchema.php
     :language: php
-    :lines: 64-72
+    :lines: 79-87
     :dedent: 8
-
-
-Casting
--------
-
-The :code:`cast()` function will attempt to convert values to a string.
-
-- Integers and floats are converted to their respective string representation.
-- Bools are converted to "1" and "0" for true and false, respectively.
-- Null is converted to "" (empty string) if :ref:`NULLABLE <nullable>` is false, otherwise left as null.
-- Other values are not converted.

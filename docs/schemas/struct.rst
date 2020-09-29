@@ -23,12 +23,14 @@ Constructor
     .. _nullable:
 
     bool :ref:`NULLABLE <nullable>`
-        Whether null values are allowed. Default value: :code:`false`.
+        Whether null values are allowed.
+        Default value: ``false``.
 
     .. _missing:
 
     string :ref:`MISSING <missing>`
-        How to handle missing keys. Default value: :code:`ERROR_ON_MISSING`.
+        How to handle missing keys.
+        Default value: ``ERROR_ON_MISSING``.
 
         ERROR_ON_MISSING:
             Missing keys are treated as errors.
@@ -37,18 +39,20 @@ Constructor
             Missing keys are ignored.
 
         MISSING_AS_NULL:
-            Missing keys are treated as :code:`null`.
+            Missing keys are treated as ``null``.
 
     .. _allow_undefined:
 
     bool :ref:`ALLOW_UNDEFINED <allow_undefined>`
-        Allow keys not defined in :ref:`fields <fields>`. Default value: :code:`false`.
+        Whether keys not defined in :ref:`fields <fields>` are allowed.
+        If false, errors are returned for undefined keys.
+        Default value: ``true``.
 
 
 Array Schema
 ------------
 
-.. literalinclude:: /../src/Composite/StructSchema.php
+.. literalinclude:: /../src/StructSchema.php
     :language: php
     :lines: 60-72
     :dedent: 8
