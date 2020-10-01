@@ -119,13 +119,13 @@ class StringSchema implements \Webbhuset\Schema\SchemaInterface
         $strlen = mb_strlen($value);
         if ($this->min !== null && $strlen < $this->min) {
             throw new \Webbhuset\Schema\ValidationException([
-                sprintf('Value must be at least %s characters.', $this->min),
+                sprintf('Value must be at least %s character(s).', $this->min),
             ]);
         }
 
         if ($this->max !== null && $strlen > $this->max) {
             throw new \Webbhuset\Schema\ValidationException([
-                sprintf('Value must be at most %s characters.', $this->max),
+                sprintf('Value must be at most %s character(s).', $this->max),
             ]);
         }
 

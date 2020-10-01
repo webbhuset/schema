@@ -3,50 +3,59 @@ Struct
 
 StructSchema validates collections of values with specific keys and schemas.
 
-Constructor
------------
+
+Functions
+---------
+
+__construct
+___________
 
 .. code-block:: php
 
     __construct ( array $fields [, array $args = [] ] )
 
-.. _fields:
 
-:ref:`fields <fields>`
-    Array of fields, with the key representing the field name and the value the field schema.
+errorOnMissing
+______________
 
-.. _args:
+.. code-block:: php
 
-:ref:`args <args>`
-    Optional arguments:
+    errorOnMissing () : self
 
-    .. _nullable:
+TODO
 
-    bool :ref:`NULLABLE <nullable>`
-        Whether null values are allowed.
-        Default value: ``false``.
 
-    .. _missing:
+missingAsNull
+_____________
 
-    string :ref:`MISSING <missing>`
-        How to handle missing keys.
-        Default value: ``ERROR_ON_MISSING``.
+.. code-block:: php
 
-        ERROR_ON_MISSING:
-            Missing keys are treated as errors.
+    missingAsNull () : self
 
-        SKIP_MISSING:
-            Missing keys are ignored.
+TODO
 
-        MISSING_AS_NULL:
-            Missing keys are treated as ``null``.
 
-    .. _allow_undefined:
+skipMissing
+___________
 
-    bool :ref:`ALLOW_UNDEFINED <allow_undefined>`
-        Whether keys not defined in :ref:`fields <fields>` are allowed.
-        If false, errors are returned for undefined keys.
-        Default value: ``true``.
+.. code-block:: php
+
+    skipMissing () : self
+
+TODO
+
+
+allowUndefined
+______________
+
+.. code-block:: php
+
+    allowUndefined ( bool $allow ) : self
+
+TODO
+
+
+.. include:: ../shared_functions.rst
 
 
 Array Schema
@@ -54,5 +63,5 @@ Array Schema
 
 .. literalinclude:: /../src/StructSchema.php
     :language: php
-    :lines: 60-72
+    :lines: 87-106
     :dedent: 8

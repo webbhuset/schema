@@ -22,7 +22,7 @@ ___
 
     min ( int $min ) : self
 
-Set minimum value.
+Set minimum allowed value.
 
 
 max
@@ -32,7 +32,7 @@ ___
 
     max ( int $max ) : self
 
-Set maximum value.
+Set maximum allowed value.
 
 
 .. include:: ../shared_functions.rst
@@ -51,7 +51,5 @@ Array Schema
 
 .. literalinclude:: /../src/IntSchema.php
     :language: php
-    :lines: 54-61
+    :lines: 56-62
     :dedent: 8
-
-

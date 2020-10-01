@@ -48,7 +48,7 @@ which will be included in the error message if the input doesn't match.
 
 .. include:: ../shared_functions.rst
 
-Running :code:`validate()` with :code:`$strict = false` will do the following coercions:
+Running :code:`validate()` with :code:`$strict = false` will do the following conversions:
 
 - Integers and floats are converted to their respective string representation.
 - Bools are converted to :code:`"1"` when :code:`true` and :code:`"0"` when :code:`false`.

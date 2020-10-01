@@ -93,23 +93,19 @@ class DictSchema implements \Webbhuset\Schema\SchemaInterface
     public function validate($value, bool $strict = true): array
     {
         if (!is_array($value)) {
-            if ($strict) {
-                throw new \Webbhuset\Schema\ValidationException(['Value must be an array.']);
-            } else {
-                $value = [];
-            }
+            throw new \Webbhuset\Schema\ValidationException(['Value must be an array.']);
         }
 
         $size = count($value);
         if ($this->min !== null && $size < $this->min) {
             throw new \Webbhuset\Schema\ValidationException([
-                sprintf('Value must have at least %s items.', $this->min),
+                sprintf('Value must have at least %s item(s).', $this->min),
             ]);
         }
 
         if ($this->max !== null && $size > $this->max) {
             throw new \Webbhuset\Schema\ValidationException([
-                sprintf('Value must have at most %s items.', $this->max),
+                sprintf('Value must have at most %s item(s).', $this->max),
             ]);
         }
 

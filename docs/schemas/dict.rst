@@ -1,48 +1,41 @@
 Dict
 ====
 
-HashmapSchema validates collections of values with a specified key schema and value schema.
+DictSchema validates arrays with a specified key schema and value schema.
 
 
-Constructor
------------
+Functions
+---------
+
+__construct
+___________
 
 .. code-block:: php
 
-    __construct ( SchemaInterface $keySchema , SchemaInterface $valueSchema [, array $args = [] ] )
+    __construct ( SchemaInterface $keySchema , SchemaInterface $valueSchema )
 
-.. _keySchema:
 
-:ref:`keySchema <keySchema>`
-    Schema used for keys.
+min
+___
 
-.. _valueSchema:
+.. code-block:: php
 
-:ref:`valueSchema <valueSchema>`
-    Schema used for values.
+    min ( int $min ) : self
 
-.. _args:
+Set minimum allowed items.
 
-:ref:`args <args>`
-    Optional arguments:
 
-    .. _nullable:
+max
+___
 
-    bool :ref:`NULLABLE <nullable>`
-        Whether null values are allowed.
-        Default value: :code:`false`.
+.. code-block:: php
 
-    .. _min:
+    max ( int $max ) : self
 
-    int :ref:`MIN <min>`
-        Minimum allowed amount of values.
-        Default value: :code:`null`.
+Set maximum allowed items.
 
-    .. _max:
 
-    int :ref:`MAX <max>`
-        Maximum allowed amount of values.
-        Default value: :code:`null`.
+.. include:: ../shared_functions.rst
 
 
 Array Schema
@@ -50,11 +43,5 @@ Array Schema
 
 .. literalinclude:: /../src/DictSchema.php
     :language: php
-    :lines: 74-83
+    :lines: 69-77
     :dedent: 8
-
-
-Casting
--------
-
-The :code:`cast()` function will never attempt convert values.
