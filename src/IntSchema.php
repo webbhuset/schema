@@ -109,4 +109,46 @@ class IntSchema implements \Webbhuset\Schema\SchemaInterface
 
         return $value;
     }
+
+    public function cast($value)
+    {
+        if (is_int($value)) {
+            return $value;
+        } elseif ($value === null) {
+            return 0;
+        } elseif (is_bool($value)) {
+            return $value ? 1 : 0;
+        } elseif (is_numeric($value)) {
+            $cast = (int)$value;
+
+            if ($cast == $value) {
+                return $cast;
+            } else {
+                return $value;
+            }
+        } else {
+            return $value;
+        }
+    }
+
+    public function validate2($value): \Webbhuset\Schema\ValidationResult
+    {
+        if (!is_int($value)) {
+            return new \Webbhuset\Schema\ValidationResult(['Value must be an int.']);
+        }
+
+        if ($this->min !== null && $strlen < $this->min) {
+            return new \Webbhuset\Schema\ValidationResult([
+                sprintf('Value must be at least %s.', $this->min),
+            ]);
+        }
+
+        if ($this->max !== null && $strlen > $this->max) {
+            return new \Webbhuset\Schema\ValidationResult([
+                sprintf('Value must be at most %s.', $this->max),
+            ]);
+        }
+
+        return new \Webbhuset\Schema\ValidationResult();
+    }
 }

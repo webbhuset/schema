@@ -35,4 +35,14 @@ class AnySchema implements \Webbhuset\Schema\SchemaInterface
     {
         return $value;
     }
+
+    public function cast($value)
+    {
+        return $value;
+    }
+
+    public function validate2($value): \Webbhuset\Schema\ValidationResult
+    {
+        return new \Webbhuset\Schema\ValidationResult();
+    }
 }

@@ -68,6 +68,20 @@ class Constructor
         return $class::fromArray($array);
     }
 
+    public static function fromArray2(array $array): \Webbhuset\Schema\SchemaInterface
+    {
+        $schema = static::ArraySchema();
+        $result = $schema->validate($array);
+
+        if (!$result->isValid()) {
+            throw new \InvalidArgumentException("Invalid array:\n{$result->getErrorsAsString()}");
+        }
+
+        $class = static::getClassFromType($array['type'] ?? null);
+
+        return $class::fromArray($array);
+    }
+
     public static function getArraySchema(string $type): \Webbhuset\Schema\StructSchema
     {
         $class = static::getClassFromType($type);

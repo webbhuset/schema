@@ -45,6 +45,9 @@ _____
 Set a regex the input must match. Optionally specify a description of the regex,
 which will be included in the error message if the input doesn't match.
 
+:regex: Regex that must match.
+:description: Optional description.
+
 
 .. include:: ../shared_functions.rst
 

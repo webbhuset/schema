@@ -47,6 +47,10 @@ class DictSchema implements \Webbhuset\Schema\SchemaInterface
     public static function fromArray(array $array): \Webbhuset\Schema\SchemaInterface
     {
         static::getArraySchema()->validate($array);
+        /* $result = static::getArraySchema()->validate($array); */
+        /* if (!$result->isValid()) { */
+        /*     throw new \InvalidArgumentException("Invalid array:\n{$result->getErrorsAsString()}"); */
+        /* } */
 
         $schema = new self(
             S::fromArray($array['args']['key']),
@@ -132,5 +136,69 @@ class DictSchema implements \Webbhuset\Schema\SchemaInterface
         }
 
         return $newValue;
+    }
+
+    public function cast($value)
+    {
+        if ($value === null) {
+            return [];
+        }
+
+        if (!is_array($value)) {
+            return $value;
+        }
+
+        $newValue = [];
+
+        foreach ($value as $k => $v) {
+            $k = $this->keySchema->cast($k);
+            $v = $this->valueSchema->cast($v);
+
+            $newValue[$k] = $v;
+        }
+
+        return $newValue;
+    }
+
+    public function validate2($value): \Webbhuset\Schema\ValidationResult
+    {
+        if (!is_array($value)) {
+            return new \Webbhuset\Schema\ValidationResult(['Value must be an array.']);
+        }
+
+        $size = count($value);
+        if ($this->min !== null && $size < $this->min) {
+            return new \Webbhuset\Schema\ValidationResult([
+                sprintf('Value must have at least %s item(s).', $this->min),
+            ]);
+        }
+
+        if ($this->max !== null && $size > $this->max) {
+            return new \Webbhuset\Schema\ValidationResult([
+                sprintf('Value must have at most %s item(s).', $this->max),
+            ]);
+        }
+
+        $errors = [];
+
+        foreach ($value as $k => $v) {
+            $keyResult = $this->keySchema->validate($k, $strict);
+
+            if (!$keyResult->isValid()) {
+                $errors[$k]['key'] = $result->getErrors();
+            }
+
+            $valueResult = $this->valueSchema->validate($v, $strict);
+
+            if (!$valueResult->isValid()) {
+                $errors[$k]['value'] = $result->getErrors();
+            }
+        }
+
+        if ($errors) {
+            return new \Webbhuset\Schema\ValidationResult($errors);
+        }
+
+        return new \Webbhuset\Schema\ValidationResult();
     }
 }

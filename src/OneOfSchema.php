@@ -78,4 +78,28 @@ class OneOfSchema implements \Webbhuset\Schema\SchemaInterface
             'Value must match one of the following:' => $errors,
         ]);
     }
+
+    public function cast($value)
+    {
+        return $value;
+    }
+
+    public function validate2($value): \Webbhuset\Schema\ValidationResult
+    {
+        $errors = [];
+
+        foreach ($this->schemas as $schema) {
+            $result = $schema->validate($value);
+
+            if ($result->isValid()) {
+                return new \Webbhuset\Schema\ValidationResult();
+            }
+
+            $errors[] = $result->getErrors();
+        }
+
+        return new \Webbhuset\Schema\ValidationResult([
+            'Value must match one of the following:' => $errors,
+        ]);
+    }
 }

@@ -167,4 +167,68 @@ class StructSchema implements \Webbhuset\Schema\SchemaInterface
 
         return $value;
     }
+
+    public function cast($value)
+    {
+        if ($value === null) {
+            $value = [];
+        } elseif (!is_array($value)) {
+            return $value;
+        }
+
+        foreach ($this->fields as $key => $schema) {
+            $value[$key] = $schema->cast($value[$key] ?? null);
+        }
+
+        foreach (array_diff_key($value, $this->fields) as $key => $v) {
+            unset($value[$key]);
+        }
+
+        return $value;
+    }
+
+    public function validate2($value): \Webbhuset\Schema\ValidationResult
+    {
+        if (!is_array($value)) {
+            return new \Webbhuset\Schema\ValidationResult(['Value must be an array.']);
+        }
+
+        $errors = [];
+        foreach ($this->fields as $key => $schema) {
+            if (!array_key_exists($key, $value)) {
+                switch ($this->missing) {
+                    case static::ERROR_ON_MISSING:
+                        $errors[$key] = ['Value must be set.'];
+
+                        continue 2;
+
+                    case static::SKIP_MISSING:
+                        continue 2;
+
+                    case static::MISSING_AS_NULL:
+                        $value[$key] = null;
+
+                        break;
+                }
+            }
+
+            $result = $schema->validate($value[$key]);
+
+            if (!$result->isValid()) {
+                $errors[$key] = $result->getErrors();
+            }
+        }
+
+        if (!$this->allowUndefined) {
+            foreach (array_diff_key($value, $this->fields) as $key => $v) {
+                $errors[$key] = ['Value must not be set (undefined key).'];
+            }
+        }
+
+        if ($errors) {
+            return new \Webbhuset\Schema\ValidationResult($errors);
+        }
+
+        return new \Webbhuset\Schema\ValidationResult();
+    }
 }

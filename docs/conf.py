@@ -22,7 +22,7 @@ from pygments.lexers.web import PhpLexer
 # -- Project information -----------------------------------------------------
 
 project = 'Schema'
-copyright = '2019, Webbhuset AB'
+copyright = '2020, Webbhuset AB'
 author = 'Webbhuset AB'
 
 # The short X.Y version

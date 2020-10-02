@@ -57,4 +57,30 @@ class NullableSchema implements \Webbhuset\Schema\SchemaInterface
             }
         }
     }
+
+    public function cast($value)
+    {
+        if ($value === null) {
+            return $value;
+        } else {
+            return $this->schema->cast($value);
+        }
+    }
+
+    public function validate2($value): \Webbhuset\Schema\ValidationResult
+    {
+        if ($value === null) {
+            return new \Webbhuset\Schema\ValidationResult();
+        }
+
+        $result = $this->schema->validate($value, $strict);
+
+        if (!$result->isValid()) {
+            return new \Webbhuset\Schema\ValidationResult([
+                'Value must be null or match the following:' => $result->getErrors(),
+            ]);
+        }
+
+        return new \Webbhuset\Schema\ValidationResult();
+    }
 }

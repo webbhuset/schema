@@ -43,4 +43,22 @@ class BoolSchema implements \Webbhuset\Schema\SchemaInterface
 
         return $value;
     }
+
+    public function cast($value)
+    {
+        if (is_bool($value)) {
+            return $value;
+        } else {
+            return (bool)$value;
+        }
+    }
+
+    public function validate2($value): \Webbhuset\Schema\ValidationResult
+    {
+        if (!is_bool($value)) {
+            return new \Webbhuset\Schema\ValidationResult(['Value must be a bool.']);
+        }
+
+        return new \Webbhuset\Schema\ValidationResult();
+    }
 }
