@@ -31,7 +31,7 @@ class OneOfSchema implements \Webbhuset\Schema\SchemaInterface
 
     public static function fromArray(array $array): \Webbhuset\Schema\SchemaInterface
     {
-        static::getArraySchema()->validate($array);
+        S::validateArray(static::getArraySchema(), $array);
 
         $schema = new self(
             array_map(S::fromArray, $array['args']['schemas'])
@@ -62,29 +62,12 @@ class OneOfSchema implements \Webbhuset\Schema\SchemaInterface
         ];
     }
 
-    public function validate($value, bool $strict = true)
-    {
-        $errors = [];
-
-        foreach ($this->schemas as $schema) {
-            try {
-                return $schema->validate($value, $strict);
-            } catch (\Webbhuset\Schema\ValidationException $e) {
-                $errors[] = $e->getValidationErrors();
-            }
-        }
-
-        throw new \Webbhuset\Schema\ValidationException([
-            'Value must match one of the following:' => $errors,
-        ]);
-    }
-
-    public function cast($value)
+    public function normalize($value)
     {
         return $value;
     }
 
-    public function validate2($value): \Webbhuset\Schema\ValidationResult
+    public function validate($value): \Webbhuset\Schema\ValidationResult
     {
         $errors = [];
 

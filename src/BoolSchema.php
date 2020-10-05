@@ -8,7 +8,7 @@ class BoolSchema implements \Webbhuset\Schema\SchemaInterface
 {
     public static function fromArray(array $array): \Webbhuset\Schema\SchemaInterface
     {
-        static::getArraySchema()->validate($array);
+        S::validateArray(static::getArraySchema(), $array);
 
         $schema = new self();
 
@@ -31,20 +31,7 @@ class BoolSchema implements \Webbhuset\Schema\SchemaInterface
         ];
     }
 
-    public function validate($value, bool $strict = true): bool
-    {
-        if (!is_bool($value)) {
-            if ($strict) {
-                throw new \Webbhuset\Schema\ValidationException(['Value must be a bool.']);
-            } else {
-                $value = (bool)$value;
-            }
-        }
-
-        return $value;
-    }
-
-    public function cast($value)
+    public function normalize($value)
     {
         if (is_bool($value)) {
             return $value;
@@ -53,7 +40,7 @@ class BoolSchema implements \Webbhuset\Schema\SchemaInterface
         }
     }
 
-    public function validate2($value): \Webbhuset\Schema\ValidationResult
+    public function validate($value): \Webbhuset\Schema\ValidationResult
     {
         if (!is_bool($value)) {
             return new \Webbhuset\Schema\ValidationResult(['Value must be a bool.']);

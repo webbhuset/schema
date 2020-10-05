@@ -46,11 +46,7 @@ class DictSchema implements \Webbhuset\Schema\SchemaInterface
 
     public static function fromArray(array $array): \Webbhuset\Schema\SchemaInterface
     {
-        static::getArraySchema()->validate($array);
-        /* $result = static::getArraySchema()->validate($array); */
-        /* if (!$result->isValid()) { */
-        /*     throw new \InvalidArgumentException("Invalid array:\n{$result->getErrorsAsString()}"); */
-        /* } */
+        S::validateArray(static::getArraySchema(), $array);
 
         $schema = new self(
             S::fromArray($array['args']['key']),
@@ -94,51 +90,7 @@ class DictSchema implements \Webbhuset\Schema\SchemaInterface
         ];
     }
 
-    public function validate($value, bool $strict = true): array
-    {
-        if (!is_array($value)) {
-            throw new \Webbhuset\Schema\ValidationException(['Value must be an array.']);
-        }
-
-        $size = count($value);
-        if ($this->min !== null && $size < $this->min) {
-            throw new \Webbhuset\Schema\ValidationException([
-                sprintf('Value must have at least %s item(s).', $this->min),
-            ]);
-        }
-
-        if ($this->max !== null && $size > $this->max) {
-            throw new \Webbhuset\Schema\ValidationException([
-                sprintf('Value must have at most %s item(s).', $this->max),
-            ]);
-        }
-
-        $errors = [];
-        $newValue = [];
-        foreach ($value as $k => $v) {
-            try {
-                $k = $this->keySchema->validate($k, $strict);
-            } catch (\Webbhuset\Schema\ValidationException $e) {
-                $errors[$k]['key'] = $e->getValidationErrors();
-            }
-
-            try {
-                $v = $this->valueSchema->validate($v, $strict);
-            } catch (\Webbhuset\Schema\ValidationException $e) {
-                $errors[$k]['value'] = $e->getValidationErrors();
-            }
-
-            $newValue[$k] = $v;
-        }
-
-        if ($errors) {
-            throw new \Webbhuset\Schema\ValidationException($errors);
-        }
-
-        return $newValue;
-    }
-
-    public function cast($value)
+    public function normalize($value)
     {
         if ($value === null) {
             return [];
@@ -151,8 +103,8 @@ class DictSchema implements \Webbhuset\Schema\SchemaInterface
         $newValue = [];
 
         foreach ($value as $k => $v) {
-            $k = $this->keySchema->cast($k);
-            $v = $this->valueSchema->cast($v);
+            $k = $this->keySchema->normalize($k);
+            $v = $this->valueSchema->normalize($v);
 
             $newValue[$k] = $v;
         }
@@ -160,7 +112,7 @@ class DictSchema implements \Webbhuset\Schema\SchemaInterface
         return $newValue;
     }
 
-    public function validate2($value): \Webbhuset\Schema\ValidationResult
+    public function validate($value): \Webbhuset\Schema\ValidationResult
     {
         if (!is_array($value)) {
             return new \Webbhuset\Schema\ValidationResult(['Value must be an array.']);

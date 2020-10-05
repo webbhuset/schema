@@ -51,7 +51,7 @@ class StringSchema implements \Webbhuset\Schema\SchemaInterface
 
     public static function fromArray(array $array): \Webbhuset\Schema\SchemaInterface
     {
-        static::getArraySchema()->validate($array);
+        S::validateArray(static::getArraySchema(), $array);
 
         $schema = new self();
 
@@ -100,51 +100,7 @@ class StringSchema implements \Webbhuset\Schema\SchemaInterface
         ];
     }
 
-    public function validate($value, bool $strict = true): string
-    {
-        if (!is_string($value)) {
-            if ($strict) {
-                throw new \Webbhuset\Schema\ValidationException(['Value must be a string.']);
-            } elseif ($value === null) {
-                $value = '';
-            } elseif (is_bool($value)) {
-                $value = $value ? '1' : '0';
-            } elseif (is_scalar($value)) {
-                $value = (string)$value;
-            } else {
-                throw new \Webbhuset\Schema\ValidationException(['Value must be a scalar.']);
-            }
-        }
-
-        $strlen = mb_strlen($value);
-        if ($this->min !== null && $strlen < $this->min) {
-            throw new \Webbhuset\Schema\ValidationException([
-                sprintf('Value must be at least %s character(s).', $this->min),
-            ]);
-        }
-
-        if ($this->max !== null && $strlen > $this->max) {
-            throw new \Webbhuset\Schema\ValidationException([
-                sprintf('Value must be at most %s character(s).', $this->max),
-            ]);
-        }
-
-        if ($this->regex !== null && !preg_match($this->regex, $value)) {
-            if ($this->regexDescription) {
-                throw new \Webbhuset\Schema\ValidationException([
-                    sprintf('Value must match %s (%s).', $this->regex, $this->regexDescription),
-                ]);
-            } else {
-                throw new \Webbhuset\Schema\ValidationException([
-                    sprintf('Value must match %s.', $this->regex),
-                ]);
-            }
-        }
-
-        return $value;
-    }
-
-    public function cast($value)
+    public function normalize($value)
     {
         if (is_string($value)) {
             return $value;
@@ -159,7 +115,7 @@ class StringSchema implements \Webbhuset\Schema\SchemaInterface
         }
     }
 
-    public function validate2($value): \Webbhuset\Schema\ValidationResult
+    public function validate($value): \Webbhuset\Schema\ValidationResult
     {
         if (!is_string($value)) {
             return new \Webbhuset\Schema\ValidationResult(['Value must be a string.']);

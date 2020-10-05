@@ -8,7 +8,7 @@ class AnySchema implements \Webbhuset\Schema\SchemaInterface
 {
     public static function fromArray(array $array): \Webbhuset\Schema\SchemaInterface
     {
-        static::getArraySchema()->validate($array);
+        S::validateArray(static::getArraySchema(), $array);
 
         $schema = new self();
 
@@ -31,17 +31,12 @@ class AnySchema implements \Webbhuset\Schema\SchemaInterface
         ];
     }
 
-    public function validate($value, bool $strict = true)
+    public function normalize($value)
     {
         return $value;
     }
 
-    public function cast($value)
-    {
-        return $value;
-    }
-
-    public function validate2($value): \Webbhuset\Schema\ValidationResult
+    public function validate($value): \Webbhuset\Schema\ValidationResult
     {
         return new \Webbhuset\Schema\ValidationResult();
     }

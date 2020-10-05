@@ -4,14 +4,11 @@ namespace Webbhuset\Schema;
 
 use Webbhuset\Schema\Constructor as S;
 
-class ArraySchemaSchema implements \Webbhuset\Schema\SchemaInterface
+class ArraySchemaSchema extends \Webbhuset\Schema\StructSchema
 {
-    protected $valueSchema;
-
-
     public function __construct()
     {
-        $this->valueSchema = S::Struct([
+        parent::__construct([
             'type' => S::OneOf([
                 S::String()->regex('/any/'),
                 S::String()->regex('/array_schema/'),
@@ -30,7 +27,7 @@ class ArraySchemaSchema implements \Webbhuset\Schema\SchemaInterface
 
     public static function fromArray(array $array): \Webbhuset\Schema\SchemaInterface
     {
-        static::getArraySchema()->validate($array);
+        S::validateArray(static::getArraySchema(), $array);
 
         $schema = new self();
 
@@ -53,32 +50,14 @@ class ArraySchemaSchema implements \Webbhuset\Schema\SchemaInterface
         ];
     }
 
-    public function validate($value, bool $strict = true): array
+    public function normalize($value)
     {
-        $valueSchema = S::Struct([
-            'type' => S::String(),
-            'args' => S::Dict(S::String(), S::Any()),
-        ]);
-
-        $valueSchema->validate($value, $strict);
-
-        try {
-            $arraySchema = S::getArraySchema($value['type']);
-        } catch (\InvalidArgumentException $e) {
-            throw new \Webbhuset\Schema\ValidationException([$e->getMessage()]);
-        }
-
-        return $arraySchema->validate($value, $strict);
+        return parent::normalize($value);
     }
 
-    public function cast($value)
+    public function validate($value): \Webbhuset\Schema\ValidationResult
     {
-        return $this->valueSchema->cast($value);
-    }
-
-    public function validate2($value): \Webbhuset\Schema\ValidationResult
-    {
-        $result = $this->valueSchema->validate($value, $strict);
+        $result = parent::validate($value);
 
         if (!$result->isValid()) {
             return $result;

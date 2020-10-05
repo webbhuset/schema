@@ -36,7 +36,7 @@ class IntSchema implements \Webbhuset\Schema\SchemaInterface
 
     public static function fromArray(array $array): \Webbhuset\Schema\SchemaInterface
     {
-        static::getArraySchema()->validate($array);
+        S::validateArray(static::getArraySchema(), $array);
 
         $schema = new self();
 
@@ -73,44 +73,7 @@ class IntSchema implements \Webbhuset\Schema\SchemaInterface
         ];
     }
 
-    public function validate($value, bool $strict = true): int
-    {
-        if (!is_int($value)) {
-            if ($strict) {
-                throw new \Webbhuset\Schema\ValidationException(['Value must be an int.']);
-            } elseif ($value === null) {
-                $value = 0;
-            } elseif (is_bool($value)) {
-                $value = $value ? 1 : 0;
-            } elseif (is_numeric($value)) {
-                $cast = (int)$value;
-
-                if ($cast == $value) {
-                    $value = $cast;
-                } else {
-                    throw new \Webbhuset\Schema\ValidationException(['Value must be coercible to an int.']);
-                }
-            } else {
-                throw new \Webbhuset\Schema\ValidationException(['Value must be coercible to an int.']);
-            }
-        }
-
-        if ($this->min !== null && $strlen < $this->min) {
-            throw new \Webbhuset\Schema\ValidationException([
-                sprintf('Value must be at least %s.', $this->min),
-            ]);
-        }
-
-        if ($this->max !== null && $strlen > $this->max) {
-            throw new \Webbhuset\Schema\ValidationException([
-                sprintf('Value must be at most %s.', $this->max),
-            ]);
-        }
-
-        return $value;
-    }
-
-    public function cast($value)
+    public function normalize($value)
     {
         if (is_int($value)) {
             return $value;
@@ -131,7 +94,7 @@ class IntSchema implements \Webbhuset\Schema\SchemaInterface
         }
     }
 
-    public function validate2($value): \Webbhuset\Schema\ValidationResult
+    public function validate($value): \Webbhuset\Schema\ValidationResult
     {
         if (!is_int($value)) {
             return new \Webbhuset\Schema\ValidationResult(['Value must be an int.']);

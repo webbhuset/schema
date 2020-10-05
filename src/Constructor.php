@@ -59,23 +59,7 @@ class Constructor
 
     public static function fromArray(array $array): \Webbhuset\Schema\SchemaInterface
     {
-        $schema = static::ArraySchema();
-        $schema->validate($array);
-
-        $type = $array['type'] ?? null;
-        $class = static::getClassFromType($type);
-
-        return $class::fromArray($array);
-    }
-
-    public static function fromArray2(array $array): \Webbhuset\Schema\SchemaInterface
-    {
-        $schema = static::ArraySchema();
-        $result = $schema->validate($array);
-
-        if (!$result->isValid()) {
-            throw new \InvalidArgumentException("Invalid array:\n{$result->getErrorsAsString()}");
-        }
+        static::validateArray(static::ArraySchema(), $array);
 
         $class = static::getClassFromType($array['type'] ?? null);
 
@@ -87,6 +71,15 @@ class Constructor
         $class = static::getClassFromType($type);
 
         return $class::getArraySchema();
+    }
+
+    public static function validateArray(\Webbhuset\Schema\StructSchema $schema, array $array): void
+    {
+        $result = $schema->validate($array);
+
+        if (!$result->isValid()) {
+            throw new \InvalidArgumentException("Invalid array:\n{$result->getErrorsAsString()}");
+        }
     }
 
     protected static function getClassFromType(string $type): string

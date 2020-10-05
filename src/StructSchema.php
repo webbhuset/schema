@@ -67,7 +67,7 @@ class StructSchema implements \Webbhuset\Schema\SchemaInterface
 
     public static function fromArray(array $array): \Webbhuset\Schema\SchemaInterface
     {
-        static::getArraySchema()->validate($array);
+        S::validateArray(static::getArraySchema(), $array);
 
         $schema = new self($array['args']['fields']);
 
@@ -120,55 +120,7 @@ class StructSchema implements \Webbhuset\Schema\SchemaInterface
         ];
     }
 
-    public function validate($value, bool $strict = true): array
-    {
-        if (!is_array($value)) {
-            if ($strict) {
-                throw new \Webbhuset\Schema\ValidationException(['Value must be an array.']);
-            } else {
-                $value = [];
-            }
-        }
-
-        $errors = [];
-        foreach ($this->fields as $key => $schema) {
-            if (!array_key_exists($key, $value)) {
-                switch ($this->missing) {
-                    case static::ERROR_ON_MISSING:
-                        $errors[$key] = ['Value must be set.'];
-                        continue 2;
-
-                    case static::SKIP_MISSING:
-                        continue 2;
-
-                    case static::MISSING_AS_NULL:
-                        $value[$key] = null;
-                        break;
-                }
-            }
-
-            try {
-                $value[$key] = $schema->validate($value[$key], $strict);
-            } catch (\Webbhuset\Schema\ValidationException $e) {
-                $errors[$key] = $e->getValidationErrors();
-            }
-
-        }
-
-        if (!$this->allowUndefined) {
-            foreach (array_diff_key($value, $this->fields) as $key => $v) {
-                $errors[$key] = ['Value must not be set (undefined key).'];
-            }
-        }
-
-        if ($errors) {
-            throw new \Webbhuset\Schema\ValidationException($errors);
-        }
-
-        return $value;
-    }
-
-    public function cast($value)
+    public function normalize($value)
     {
         if ($value === null) {
             $value = [];
@@ -177,7 +129,7 @@ class StructSchema implements \Webbhuset\Schema\SchemaInterface
         }
 
         foreach ($this->fields as $key => $schema) {
-            $value[$key] = $schema->cast($value[$key] ?? null);
+            $value[$key] = $schema->normalize($value[$key] ?? null);
         }
 
         foreach (array_diff_key($value, $this->fields) as $key => $v) {
@@ -187,7 +139,7 @@ class StructSchema implements \Webbhuset\Schema\SchemaInterface
         return $value;
     }
 
-    public function validate2($value): \Webbhuset\Schema\ValidationResult
+    public function validate($value): \Webbhuset\Schema\ValidationResult
     {
         if (!is_array($value)) {
             return new \Webbhuset\Schema\ValidationResult(['Value must be an array.']);

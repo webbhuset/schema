@@ -16,7 +16,7 @@ class NullableSchema implements \Webbhuset\Schema\SchemaInterface
 
     public static function fromArray(array $array): \Webbhuset\Schema\SchemaInterface
     {
-        static::getArraySchema()->validate($array);
+        S::validateArray(static::getArraySchema(), $array);
 
         $schema = new self($array['args']['schema']);
 
@@ -43,31 +43,16 @@ class NullableSchema implements \Webbhuset\Schema\SchemaInterface
         ];
     }
 
-    public function validate($value, bool $strict = true)
+    public function normalize($value)
     {
         if ($value === null) {
             return $value;
         } else {
-            try {
-                return $this->schema->validate($value, $strict);
-            } catch (\Webbhuset\Schema\ValidationException $e) {
-                throw new \Webbhuset\Schema\ValidationException([
-                    'Value must be null or match the following:' => $e->getValidationErrors(),
-                ]);
-            }
+            return $this->schema->normalize($value);
         }
     }
 
-    public function cast($value)
-    {
-        if ($value === null) {
-            return $value;
-        } else {
-            return $this->schema->cast($value);
-        }
-    }
-
-    public function validate2($value): \Webbhuset\Schema\ValidationResult
+    public function validate($value): \Webbhuset\Schema\ValidationResult
     {
         if ($value === null) {
             return new \Webbhuset\Schema\ValidationResult();
