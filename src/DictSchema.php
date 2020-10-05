@@ -134,13 +134,13 @@ class DictSchema implements \Webbhuset\Schema\SchemaInterface
         $errors = [];
 
         foreach ($value as $k => $v) {
-            $keyResult = $this->keySchema->validate($k, $strict);
+            $keyResult = $this->keySchema->validate($k);
 
             if (!$keyResult->isValid()) {
                 $errors[$k]['key'] = $result->getErrors();
             }
 
-            $valueResult = $this->valueSchema->validate($v, $strict);
+            $valueResult = $this->valueSchema->validate($v);
 
             if (!$valueResult->isValid()) {
                 $errors[$k]['value'] = $result->getErrors();

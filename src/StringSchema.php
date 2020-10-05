@@ -63,6 +63,10 @@ class StringSchema implements \Webbhuset\Schema\SchemaInterface
             $schema->max = $array['args']['max'];
         }
 
+        if ($schema->max !== null && $schema->min !== null && $schema->min > $schema->max) {
+            throw new \InvalidArgumentException('Min cannot be higher than max.');
+        }
+
         if ($array['args']['regex']) {
             $schema->regex = $array['args']['regex'];
         }

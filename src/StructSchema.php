@@ -6,13 +6,7 @@ use Webbhuset\Schema\Constructor as S;
 
 class StructSchema implements \Webbhuset\Schema\SchemaInterface
 {
-    const ERROR_ON_MISSING = 'ERROR_ON_MISSING';
-    const MISSING_AS_NULL = 'MISSING_AS_NULL';
-    const SKIP_MISSING = 'SKIP_MISSING';
-
     protected $fields;
-    protected $allowUndefined;
-    protected $missing;
 
 
     public function __construct(array $fields)
@@ -29,40 +23,6 @@ class StructSchema implements \Webbhuset\Schema\SchemaInterface
         }
 
         $this->fields = $fields;
-        $this->allowUndefined = false;
-        $this->missing = static::ERROR_ON_MISSING;
-    }
-
-    public function errorOnMissing(): self
-    {
-        $clone = clone $this;
-        $clone->missing = static::ERROR_ON_MISSING;
-
-        return $clone;
-    }
-
-    public function missingAsNull(): self
-    {
-        $clone = clone $this;
-        $clone->missing = static::MISSING_AS_NULL;
-
-        return $clone;
-    }
-
-    public function skipMissing(): self
-    {
-        $clone = clone $this;
-        $clone->missing = static::SKIP_MISSING;
-
-        return $clone;
-    }
-
-    public function allowUndefined(bool $allow): self
-    {
-        $clone = clone $this;
-        $clone->allowUndefined = $allow;
-
-        return $clone;
     }
 
     public static function fromArray(array $array): \Webbhuset\Schema\SchemaInterface
@@ -70,14 +30,6 @@ class StructSchema implements \Webbhuset\Schema\SchemaInterface
         S::validateArray(static::getArraySchema(), $array);
 
         $schema = new self($array['args']['fields']);
-
-        if ($array['args']['missing']) {
-            $this->missing = $array['args']['missing'];
-        }
-
-        if ($array['args']['allow_undefined']) {
-            $this->missing = $array['args']['allow_undefined'];
-        }
 
         return $schema;
     }
@@ -96,12 +48,6 @@ class StructSchema implements \Webbhuset\Schema\SchemaInterface
                     ]),
                     S::ArraySchema()
                 ),
-                'missing' => S::OneOf([
-                    S::String()->regex('/' . static::ERROR_ON_MISSING . '/'),
-                    S::String()->regex('/' . static::SKIP_MISSING . '/'),
-                    S::String()->regex('/' . static::MISSING_AS_NULL . '/'),
-                ]),
-                'allow_undefined' => S::Bool(),
             ]),
         ]);
     }
@@ -114,8 +60,6 @@ class StructSchema implements \Webbhuset\Schema\SchemaInterface
                 'fields' => array_map(function($schema) {
                     return $schema->toArray();
                 }, $this->fields),
-                'missing' => $this->missing,
-                'allow_undefined' => $this->allowUndefined,
             ],
         ];
     }
@@ -148,20 +92,9 @@ class StructSchema implements \Webbhuset\Schema\SchemaInterface
         $errors = [];
         foreach ($this->fields as $key => $schema) {
             if (!array_key_exists($key, $value)) {
-                switch ($this->missing) {
-                    case static::ERROR_ON_MISSING:
-                        $errors[$key] = ['Value must be set.'];
+                $errors[$key] = ['Value must be set.'];
 
-                        continue 2;
-
-                    case static::SKIP_MISSING:
-                        continue 2;
-
-                    case static::MISSING_AS_NULL:
-                        $value[$key] = null;
-
-                        break;
-                }
+                continue;
             }
 
             $result = $schema->validate($value[$key]);
@@ -171,10 +104,8 @@ class StructSchema implements \Webbhuset\Schema\SchemaInterface
             }
         }
 
-        if (!$this->allowUndefined) {
-            foreach (array_diff_key($value, $this->fields) as $key => $v) {
-                $errors[$key] = ['Value must not be set (undefined key).'];
-            }
+        foreach (array_diff_key($value, $this->fields) as $key => $v) {
+            $errors[$key] = ['Value must not be set (undefined key).'];
         }
 
         if ($errors) {

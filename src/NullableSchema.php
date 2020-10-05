@@ -58,7 +58,7 @@ class NullableSchema implements \Webbhuset\Schema\SchemaInterface
             return new \Webbhuset\Schema\ValidationResult();
         }
 
-        $result = $this->schema->validate($value, $strict);
+        $result = $this->schema->validate($value);
 
         if (!$result->isValid()) {
             return new \Webbhuset\Schema\ValidationResult([
