@@ -105,7 +105,7 @@ class StructSchema implements \Webbhuset\Schema\SchemaInterface
         }
 
         foreach (array_diff_key($value, $this->fields) as $key => $v) {
-            $errors[$key] = ['Value must not be set (undefined key).'];
+            $errors[$key] = ['Undefined key must not be set.'];
         }
 
         if ($errors) {

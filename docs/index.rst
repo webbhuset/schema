@@ -11,5 +11,5 @@ Welcome to Schema's documentation!
     :maxdepth: 3
     :caption: Table of Contents:
 
-    constructor
-    schemas
+    introduction
+    classes

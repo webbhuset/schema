@@ -1,11 +1,13 @@
-Dict
-====
+DictSchema
+==========
 
 DictSchema validates arrays with a specified key schema and value schema.
 
 
-Functions
----------
+Methods
+-------
+
+.. _dict-construct:
 
 __construct
 ___________
@@ -35,7 +37,24 @@ ___
 Set maximum allowed items.
 
 
-.. include:: ../shared_functions.rst
+.. include:: ../shared_functions/from_array.rst
+
+
+.. include:: ../shared_functions/get_array_schema.rst
+
+
+.. include:: ../shared_functions/to_array.rst
+
+
+normalize
+_________
+
+.. code-block:: php
+
+   normalize ( $value ) : mixed
+
+
+.. include:: ../shared_functions/validate.rst
 
 
 Array Schema
