@@ -1,5 +1,5 @@
 getArraySchema
-______________
+--------------
 
 .. code-block:: php
 

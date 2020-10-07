@@ -1,3 +1,4 @@
+==========
 DictSchema
 ==========
 
@@ -5,12 +6,12 @@ DictSchema validates arrays with a specified key schema and value schema.
 
 
 Methods
--------
+=======
 
 .. _dict-construct:
 
 __construct
-___________
+-----------
 
 .. code-block:: php
 
@@ -18,7 +19,7 @@ ___________
 
 
 min
-___
+---
 
 .. code-block:: php
 
@@ -28,7 +29,7 @@ Set minimum allowed items.
 
 
 max
-___
+---
 
 .. code-block:: php
 
@@ -47,7 +48,7 @@ Set maximum allowed items.
 
 
 normalize
-_________
+---------
 
 .. code-block:: php
 
@@ -58,7 +59,7 @@ _________
 
 
 Array Schema
-------------
+============
 
 .. literalinclude:: /../src/DictSchema.php
     :language: php

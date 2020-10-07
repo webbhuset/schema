@@ -1,5 +1,5 @@
 fromArray
-_________
+---------
 
 .. code-block:: php
 

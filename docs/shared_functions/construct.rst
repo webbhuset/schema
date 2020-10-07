@@ -1,5 +1,5 @@
 __construct
-___________
+-----------
 
 .. code-block:: php
 

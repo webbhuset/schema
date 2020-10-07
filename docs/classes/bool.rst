@@ -1,3 +1,4 @@
+==========
 BoolSchema
 ==========
 
@@ -5,7 +6,7 @@ BoolSchema validates that a value is a bool.
 
 
 Class synopsis
---------------
+==============
 
 .. code-block:: php
 
@@ -22,7 +23,7 @@ Class synopsis
 
 
 Methods
--------
+=======
 
 .. _bool-construct:
 
@@ -39,7 +40,7 @@ Methods
 
 
 normalize
-_________
+---------
 
 .. code-block:: php
 
@@ -62,7 +63,7 @@ Returns the normalized value.
 
 
 Array Schema
-------------
+============
 
 .. literalinclude:: /../src/BoolSchema.php
     :language: php
@@ -71,10 +72,10 @@ Array Schema
 
 
 Examples
---------
+========
 
 Example #1 BoolSchema usage example
-_____________________________________
+-------------------------------------
 
 .. literalinclude:: /../examples/bool.php
     :language: php

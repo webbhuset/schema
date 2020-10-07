@@ -1,3 +1,4 @@
+===========
 OneOfSchema
 ===========
 
@@ -5,12 +6,12 @@ OneOfSchema validates that values matches one of a list of specified schemas.
 
 
 Methods
--------
+=======
 
 .. _one-of-construct:
 
 __construct
-___________
+-----------
 
 .. code-block:: php
 
@@ -27,7 +28,7 @@ ___________
 
 
 normalize
-_________
+---------
 
 .. code-block:: php
 
@@ -38,7 +39,7 @@ _________
 
 
 Array Schema
-------------
+============
 
 .. literalinclude:: /../src/OneOfSchema.php
     :language: php

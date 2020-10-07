@@ -1,3 +1,4 @@
+============
 StructSchema
 ============
 
@@ -5,7 +6,7 @@ StructSchema validates that an array have specific keys and and that the value o
 
 
 Class synopsis
---------------
+==============
 
 .. code-block:: php
 
@@ -21,12 +22,12 @@ Class synopsis
     }
 
 Methods
--------
+=======
 
 .. _struct-construct:
 
 __construct
-___________
+-----------
 
 .. code-block:: php
 
@@ -53,7 +54,7 @@ ___________
 
 
 normalize
-_________
+---------
 
 .. code-block:: php
 
@@ -78,7 +79,7 @@ Returns the normalized value.
 
 
 Array Schema
-------------
+============
 
 .. literalinclude:: /../src/StructSchema.php
     :language: php
@@ -87,10 +88,10 @@ Array Schema
 
 
 Examples
---------
+========
 
 Example #1 StructSchema usage example
-_____________________________________
+-------------------------------------
 
 .. literalinclude:: /../examples/struct.php
     :language: php

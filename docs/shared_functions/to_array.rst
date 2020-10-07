@@ -1,5 +1,5 @@
 toArray
-_______
+-------
 
 .. code-block:: php
 

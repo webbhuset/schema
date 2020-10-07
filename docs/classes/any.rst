@@ -1,3 +1,4 @@
+=========
 AnySchema
 =========
 
@@ -5,7 +6,7 @@ AnySchema doesn't do any validation and accepts anything as valid.
 
 
 Class synopsis
---------------
+==============
 
 .. code-block:: php
 
@@ -20,8 +21,9 @@ Class synopsis
         public validate ( mixed $value ) : \Webbhuset\Schema\ValidationResult
     }
 
+
 Methods
--------
+=======
 
 .. _any-construct:
 
@@ -38,7 +40,7 @@ Methods
 
 
 normalize
-_________
+---------
 
 .. code-block:: php
 
@@ -68,10 +70,10 @@ Array Schema
 
 
 Examples
---------
+========
 
 Example #1 AnySchema usage example
-__________________________________
+----------------------------------
 
 .. literalinclude:: /../examples/any.php
     :language: php

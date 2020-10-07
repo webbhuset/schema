@@ -1,3 +1,4 @@
+===========
 FloatSchema
 ===========
 
@@ -5,12 +6,12 @@ FloatSchema validates float values.
 
 
 Methods
--------
+=======
 
 .. _float-construct:
 
 __construct
-___________
+-----------
 
 .. code-block:: php
 
@@ -18,7 +19,7 @@ ___________
 
 
 max
-___
+---
 
 .. code-block:: php
 
@@ -32,7 +33,7 @@ Parameters:
 
 
 min
-___
+---
 
 .. code-block:: php
 
@@ -55,7 +56,7 @@ Parameters:
 
 
 normalize
-_________
+---------
 
 .. code-block:: php
 
@@ -74,7 +75,7 @@ Normalizes a value according to the following rules:
 
 
 Array Schema
-------------
+============
 
 .. literalinclude:: /../src/FloatSchema.php
     :language: php

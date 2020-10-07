@@ -1,3 +1,4 @@
+=================
 ArraySchemaSchema
 =================
 
@@ -5,7 +6,7 @@ ArraySchemaSchema validates that an array is valid for use with :ref:`fromArray`
 
 
 Class synopsis
---------------
+==============
 
 .. code-block:: php
 
@@ -24,7 +25,7 @@ Class synopsis
 
 
 Methods
--------
+=======
 
 .. _array-schema-construct:
 
@@ -44,7 +45,7 @@ Methods
 
 
 Array Schema
-------------
+============
 
 .. literalinclude:: /../src/ArraySchemaSchema.php
     :language: php

@@ -1,3 +1,4 @@
+===============
 SchemaInterface
 ===============
 
@@ -5,7 +6,7 @@ Interface for all schema classes.
 
 
 Class synopsis
---------------
+==============
 
 .. code-block:: php
 
@@ -21,10 +22,10 @@ Class synopsis
 
 
 Methods
--------
+=======
 
 fromArray
-_________
+---------
 
 .. code-block:: php
 
@@ -42,7 +43,7 @@ Returns the built schema object.
 
 
 getArraySchema
-______________
+--------------
 
 .. code-block:: php
 
@@ -60,7 +61,7 @@ Returns a :doc:`/classes/struct`.
 
 
 toArray
-_______
+-------
 
 .. code-block:: php
 
@@ -78,7 +79,7 @@ Returns the schema as a serialized array.
 
 
 normalize
-_________
+---------
 
 .. code-block:: php
 
@@ -96,7 +97,7 @@ Returns the normalized value.
 
 
 validate
-________
+--------
 
 .. code-block:: php
 

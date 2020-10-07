@@ -1,5 +1,5 @@
 validate
-________
+--------
 
 .. code-block:: php
 

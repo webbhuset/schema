@@ -1,10 +1,12 @@
+===========
 Constructor
 ===========
 
 Constructor is a utility class for constructing schema classes.
 
+
 Class synopsis
---------------
+==============
 
 .. code-block:: php
 
@@ -25,11 +27,12 @@ Class synopsis
         public static validateArray ( \Webbhuset\Schema\StructSchema $schema , array $array ) : void
     }
 
+
 Methods
--------
+=======
 
 Any
-___
+---
 
 .. code-block:: php
 
@@ -39,7 +42,7 @@ Creates an :doc:`any`. See :ref:`AnySchema::__construct <any-construct>`.
 
 
 ArraySchema
-___________
+-----------
 
 .. code-block:: php
 
@@ -49,7 +52,7 @@ Creates an :doc:`array_schema`. See :ref:`ArraySchemaSchema::__construct <array-
 
 
 Bool
-____
+----
 
 .. code-block:: php
 
@@ -59,7 +62,7 @@ Creates a :doc:`bool`. See :ref:`BoolSchema::__construct <bool-construct>`.
 
 
 Dict
-____
+----
 
 .. code-block:: php
 
@@ -69,7 +72,7 @@ Creates a :doc:`dict`. See :ref:`DictSchema::__construct <dict-construct>`.
 
 
 Float
-_____
+-----
 
 .. code-block:: php
 
@@ -79,7 +82,7 @@ Creates a :doc:`float`. See :ref:`FloatSchema::__construct <float-construct>`.
 
 
 Int
-___
+---
 
 .. code-block:: php
 
@@ -89,7 +92,7 @@ Creates an :doc:`int`. See :ref:`IntSchema::__construct <int-construct>`.
 
 
 Nullable
-________
+--------
 
 .. code-block:: php
 
@@ -99,7 +102,7 @@ Creates a :doc:`nullable`. See :ref:`NullableSchema::__construct <nullable-const
 
 
 OneOf
-_____
+-----
 
 .. code-block:: php
 
@@ -109,7 +112,7 @@ Creates a :doc:`one_of`. See :ref:`OneOfSchema::__construct <one-of-construct>`.
 
 
 String
-______
+------
 
 .. code-block:: php
 
@@ -119,7 +122,7 @@ Creates a :doc:`string`. See :ref:`StringSchema::__construct <string-construct>`
 
 
 Struct
-______
+------
 
 .. code-block:: php
 
@@ -131,7 +134,7 @@ Creates a :doc:`struct`. See :ref:`StructSchema::__construct <struct-construct>`
 .. _fromArray:
 
 fromArray
-_________
+---------
 
 .. code-block:: php
 
@@ -153,7 +156,7 @@ Returns the built schema object.
 
 
 getArraySchema
-______________
+--------------
 
 .. code-block:: php
 
@@ -175,7 +178,7 @@ Returns a :doc:`/classes/struct`.
 
 
 validateArray
-_____________
+-------------
 
 .. code-block:: php
 
@@ -197,3 +200,13 @@ No value is returned.
 :`InvalidArgumentException`_: When the array provided in $array is invalid according to the schema provided in $schema..
 
 .. _InvalidArgumentException: https://www.php.net/manual/en/class.invalidargumentexception.php
+
+
+Examples
+========
+
+Example #1 Constructor usage example
+------------------------------------
+
+.. literalinclude:: /../examples/constructor.php
+    :language: php

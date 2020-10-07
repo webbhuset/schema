@@ -1,3 +1,4 @@
+=========
 IntSchema
 =========
 
@@ -5,12 +6,12 @@ IntSchema validates integer values.
 
 
 Methods
--------
+=======
 
 .. _int-construct:
 
 __construct
-___________
+-----------
 
 .. code-block:: php
 
@@ -18,7 +19,7 @@ ___________
 
 
 max
-___
+---
 
 .. code-block:: php
 
@@ -32,7 +33,7 @@ Parameters:
 
 
 min
-___
+---
 
 .. code-block:: php
 
@@ -55,7 +56,7 @@ Parameters:
 
 
 normalize
-_________
+---------
 
 .. code-block:: php
 
@@ -78,7 +79,7 @@ Parameters:
 
 
 Array Schema
-------------
+============
 
 .. literalinclude:: /../src/IntSchema.php
     :language: php

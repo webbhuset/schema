@@ -1,8 +1,9 @@
+=======
 Classes
 =======
 
 General classes
----------------
+===============
 
 .. toctree::
     :hidden:
@@ -18,7 +19,7 @@ General classes
 
 
 Schema classes
---------------
+==============
 
 .. toctree::
     :hidden:

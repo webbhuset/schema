@@ -1,3 +1,4 @@
+================
 ValidationResult
 ================
 
@@ -5,7 +6,7 @@ Data class returned by validation functions.
 
 
 Class synopsis
---------------
+==============
 
 .. code-block:: php
 
@@ -20,10 +21,10 @@ Class synopsis
 
 
 Methods
--------
+=======
 
 __construct
-___________
+-----------
 
 .. code-block:: php
 
@@ -35,7 +36,7 @@ ___________
 
 
 isValid
-_______
+-------
 
 .. code-block:: php
 
@@ -54,7 +55,7 @@ Returns :code:`true` if no errors were provided in the constructor, otherwise :c
 
 
 getErrors
-_________
+---------
 
 .. code-block:: php
 
@@ -72,7 +73,7 @@ Returns the errors provided in the constructor.
 
 
 getErrorsAsString
-_________________
+-----------------
 
 .. code-block:: php
 
