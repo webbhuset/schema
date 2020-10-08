@@ -4,6 +4,7 @@ StringSchema
 
 StringSchema validates string values.
 
+----
 
 Class synopsis
 ==============
@@ -24,19 +25,16 @@ Class synopsis
         public validate ( mixed $value ) : \Webbhuset\Schema\ValidationResult
     }
 
+----
 
 Methods
 =======
 
 .. _string-construct:
 
-__construct
------------
+.. include:: ../shared_functions/construct.rst
 
-.. code-block:: php
-
-    public __construct ()
-
+----
 
 max
 ---
@@ -51,6 +49,7 @@ Parameters:
 
 :$min: Maximum allowed length.
 
+----
 
 min
 ---
@@ -65,6 +64,7 @@ Parameters:
 
 :$min: Minimum allowed length.
 
+----
 
 regex
 -----
@@ -81,22 +81,26 @@ Parameters:
 :$regex: Regex that must match.
 :$description: Optional description.
 
+----
 
 .. include:: ../shared_functions/from_array.rst
 
+----
 
 .. include:: ../shared_functions/get_array_schema.rst
 
+----
 
 .. include:: ../shared_functions/to_array.rst
 
+----
 
 normalize
 ---------
 
 .. code-block:: php
 
-   public normalize ( $value ) : mixed
+   public normalize ( mixed $value ) : mixed
 
 Normalizes a value according to the following rules:
 
@@ -105,9 +109,19 @@ Normalizes a value according to the following rules:
 - :code:`null` is converted to :code:`""` (empty string).
 - Other values are not converted.
 
+**Parameters**
+
+:mixed $value: The value to normalize.
+
+**Return values**
+
+Returns the input value.
+
+----
 
 .. include:: ../shared_functions/validate.rst
 
+----
 
 Array Schema
 ============
@@ -116,3 +130,14 @@ Array Schema
     :language: php
     :lines: 83-91
     :dedent: 8
+
+----
+
+Examples
+========
+
+Example #1 StringSchema usage example
+-------------------------------------
+
+.. literalinclude:: /../examples/string.php
+    :language: php

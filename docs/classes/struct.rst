@@ -2,8 +2,9 @@
 StructSchema
 ============
 
-StructSchema validates that an array have specific keys and and that the value of each key matches another schema.
+StructSchema validates that a value is an array that have specific keys and and that the value of each key matches another schema.
 
+----
 
 Class synopsis
 ==============
@@ -20,6 +21,8 @@ Class synopsis
         public normalize ( mixed $value ) : mixed
         public validate ( mixed $value ) : \Webbhuset\Schema\ValidationResult
     }
+
+----
 
 Methods
 =======
@@ -43,15 +46,19 @@ __construct
 
 .. _InvalidArgumentException: https://www.php.net/manual/en/class.invalidargumentexception.php
 
+----
 
 .. include:: ../shared_functions/from_array.rst
 
+----
 
 .. include:: ../shared_functions/get_array_schema.rst
 
+----
 
 .. include:: ../shared_functions/to_array.rst
 
+----
 
 normalize
 ---------
@@ -74,9 +81,11 @@ Normalizes a value. The following steps are done in order:
 
 Returns the normalized value.
 
+----
 
 .. include:: ../shared_functions/validate.rst
 
+----
 
 Array Schema
 ============
@@ -86,6 +95,7 @@ Array Schema
     :lines: 39-52
     :dedent: 8
 
+----
 
 Examples
 ========

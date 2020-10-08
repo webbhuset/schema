@@ -4,6 +4,7 @@ SchemaInterface
 
 Interface for all schema classes.
 
+----
 
 Class synopsis
 ==============
@@ -20,6 +21,7 @@ Class synopsis
         abstract public validate ( mixed $value ) : \Webbhuset\Schema\ValidationResult
     }
 
+----
 
 Methods
 =======
@@ -41,6 +43,7 @@ Build schema from an array.
 
 Returns the built schema object.
 
+----
 
 getArraySchema
 --------------
@@ -59,6 +62,7 @@ This method has no parameters.
 
 Returns a :doc:`/classes/struct`.
 
+----
 
 toArray
 -------
@@ -77,6 +81,7 @@ This method has no parameters.
 
 Returns the schema as a serialized array.
 
+----
 
 normalize
 ---------
@@ -95,6 +100,7 @@ Normalize a value.
 
 Returns the normalized value.
 
+----
 
 validate
 --------

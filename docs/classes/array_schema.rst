@@ -4,6 +4,7 @@ ArraySchemaSchema
 
 ArraySchemaSchema validates that an array is valid for use with :ref:`fromArray`.
 
+----
 
 Class synopsis
 ==============
@@ -23,6 +24,7 @@ Class synopsis
         public StructSchema::normalize ( mixed $value ) : mixed
     }
 
+----
 
 Methods
 =======
@@ -31,18 +33,23 @@ Methods
 
 .. include:: ../shared_functions/construct.rst
 
+----
 
 .. include:: ../shared_functions/from_array.rst
 
+----
 
 .. include:: ../shared_functions/get_array_schema.rst
 
+----
 
 .. include:: ../shared_functions/to_array.rst
 
+----
 
 .. include:: ../shared_functions/validate.rst
 
+----
 
 Array Schema
 ============

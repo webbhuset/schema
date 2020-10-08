@@ -4,6 +4,7 @@ Constructor
 
 Constructor is a utility class for constructing schema classes.
 
+----
 
 Class synopsis
 ==============
@@ -27,6 +28,7 @@ Class synopsis
         public static validateArray ( \Webbhuset\Schema\StructSchema $schema , array $array ) : void
     }
 
+----
 
 Methods
 =======
@@ -40,6 +42,7 @@ Any
 
 Creates an :doc:`any`. See :ref:`AnySchema::__construct <any-construct>`.
 
+----
 
 ArraySchema
 -----------
@@ -50,6 +53,7 @@ ArraySchema
 
 Creates an :doc:`array_schema`. See :ref:`ArraySchemaSchema::__construct <array-schema-construct>`.
 
+----
 
 Bool
 ----
@@ -60,6 +64,7 @@ Bool
 
 Creates a :doc:`bool`. See :ref:`BoolSchema::__construct <bool-construct>`.
 
+----
 
 Dict
 ----
@@ -70,6 +75,7 @@ Dict
 
 Creates a :doc:`dict`. See :ref:`DictSchema::__construct <dict-construct>`.
 
+----
 
 Float
 -----
@@ -80,6 +86,7 @@ Float
 
 Creates a :doc:`float`. See :ref:`FloatSchema::__construct <float-construct>`.
 
+----
 
 Int
 ---
@@ -90,6 +97,7 @@ Int
 
 Creates an :doc:`int`. See :ref:`IntSchema::__construct <int-construct>`.
 
+----
 
 Nullable
 --------
@@ -100,6 +108,7 @@ Nullable
 
 Creates a :doc:`nullable`. See :ref:`NullableSchema::__construct <nullable-construct>`.
 
+----
 
 OneOf
 -----
@@ -110,6 +119,7 @@ OneOf
 
 Creates a :doc:`one_of`. See :ref:`OneOfSchema::__construct <one-of-construct>`.
 
+----
 
 String
 ------
@@ -120,6 +130,7 @@ String
 
 Creates a :doc:`string`. See :ref:`StringSchema::__construct <string-construct>`.
 
+----
 
 Struct
 ------
@@ -130,6 +141,7 @@ Struct
 
 Creates a :doc:`struct`. See :ref:`StructSchema::__construct <struct-construct>`.
 
+----
 
 .. _fromArray:
 
@@ -154,6 +166,7 @@ Returns the built schema object.
 
 :`InvalidArgumentException`_: When the provided array is invalid.
 
+----
 
 getArraySchema
 --------------
@@ -176,6 +189,7 @@ Returns a :doc:`/classes/struct`.
 
 :`InvalidArgumentException`_: When the string provided in $type does not match a valid schema.
 
+----
 
 validateArray
 -------------
@@ -201,6 +215,7 @@ No value is returned.
 
 .. _InvalidArgumentException: https://www.php.net/manual/en/class.invalidargumentexception.php
 
+----
 
 Examples
 ========

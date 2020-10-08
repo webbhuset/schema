@@ -4,63 +4,101 @@ IntSchema
 
 IntSchema validates integer values.
 
+----
+
+Class synopsis
+==============
+
+.. code-block:: php
+
+    \Webbhuset\Schema\IntSchema implements \Webbhuset\Schema\SchemaInterface {
+
+        /* Methods */
+        public __construct ( void )
+        public max ( int $max ) : self
+        public min ( int $min ) : self
+        public static fromArray ( array $array ) : \Webbhuset\Schema\SchemaInterface
+        public static getArraySchema ( void ) : \Webbhuset\Schema\StructSchema
+        public toArray ( void ) : array
+        public normalize ( mixed $value ) : mixed
+        public validate ( mixed $value ) : \Webbhuset\Schema\ValidationResult
+    }
+
+----
 
 Methods
 =======
 
 .. _int-construct:
 
-__construct
------------
+.. include:: ../shared_functions/construct.rst
 
-.. code-block:: php
-
-    __construct ()
-
+----
 
 max
 ---
 
 .. code-block:: php
 
-    max ( int $max ) : self
+    public max ( int $max ) : self
 
 Set maximum allowed value.
 
-Parameters:
+**Parameters**
 
-:$max: Maximum allowed value.
+:int $max: Maximum allowed values.
 
+**Return values**
+
+Returns a copy of self with maximum value set.
+
+**Throws**
+
+:`InvalidArgumentException`_: When the provided $max is higher than the current min.
+
+----
 
 min
 ---
 
 .. code-block:: php
 
-    min ( int $min ) : self
+    public min ( int $min ) : self
 
 Set minimum allowed value.
 
-Parameters:
+**Parameters**
 
-:$min: Minimum allowed value.
+:float $min: Minimum allowed value.
 
+**Return values**
+
+Returns a copy of self with minimum value set.
+
+**Throws**
+
+:`InvalidArgumentException`_: When the provided $min is lower than the current max.
+
+----
 
 .. include:: ../shared_functions/from_array.rst
 
+----
 
 .. include:: ../shared_functions/get_array_schema.rst
 
+----
 
 .. include:: ../shared_functions/to_array.rst
 
+----
 
 normalize
 ---------
 
 .. code-block:: php
 
-   normalize ( $value ) : mixed
+   public normalize ( value $value ) : mixed
 
 Normalizes a value according to the following rules:
 
@@ -70,18 +108,35 @@ Normalizes a value according to the following rules:
 - :code:`null` is converted to :code:`0`.
 - Other values are not converted.
 
-Parameters:
+**Parameters**
 
-:$value: Value to normalize.
+:mixed $value: The value to normalize.
 
+**Return values**
+
+Returns the normalized value.
+
+----
 
 .. include:: ../shared_functions/validate.rst
 
+----
 
 Array Schema
 ============
 
 .. literalinclude:: /../src/IntSchema.php
     :language: php
-    :lines: 56-62
+    :lines: 60-66
     :dedent: 8
+
+----
+
+Examples
+========
+
+Example #1 DictSchema usage example
+-----------------------------------
+
+.. literalinclude:: /../examples/int.php
+    :language: php

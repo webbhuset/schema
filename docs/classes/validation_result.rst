@@ -4,6 +4,7 @@ ValidationResult
 
 Data class returned by validation functions.
 
+----
 
 Class synopsis
 ==============
@@ -19,6 +20,7 @@ Class synopsis
         public getErrorsAsString ( void ) : string
     }
 
+----
 
 Methods
 =======
@@ -34,6 +36,7 @@ __construct
 
 :$errors: Array of errors.
 
+----
 
 isValid
 -------
@@ -52,7 +55,7 @@ This method has no parameters.
 
 Returns :code:`true` if no errors were provided in the constructor, otherwise :code:`false`.
 
-
+----
 
 getErrors
 ---------
@@ -71,6 +74,7 @@ This method has no parameters.
 
 Returns the errors provided in the constructor.
 
+----
 
 getErrorsAsString
 -----------------

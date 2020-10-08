@@ -10,12 +10,12 @@ General classes
     :maxdepth: 1
 
     classes/constructor
-    classes/validation_result
     classes/schema_interface
+    classes/validation_result
 
 * :doc:`/classes/constructor` - Utility class for constructing schema classes.
-* :doc:`/classes/validation_result` - Data class returned by validation functions.
 * :doc:`/classes/schema_interface` - Interface implemented by schema classes.
+* :doc:`/classes/validation_result` - Data class returned by validation functions.
 
 
 Schema classes

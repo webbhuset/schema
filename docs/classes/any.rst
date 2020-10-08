@@ -4,6 +4,7 @@ AnySchema
 
 AnySchema doesn't do any validation and accepts anything as valid.
 
+----
 
 Class synopsis
 ==============
@@ -21,6 +22,7 @@ Class synopsis
         public validate ( mixed $value ) : \Webbhuset\Schema\ValidationResult
     }
 
+----
 
 Methods
 =======
@@ -29,15 +31,19 @@ Methods
 
 .. include:: ../shared_functions/construct.rst
 
+----
 
 .. include:: ../shared_functions/from_array.rst
 
+----
 
 .. include:: ../shared_functions/get_array_schema.rst
 
+----
 
 .. include:: ../shared_functions/to_array.rst
 
+----
 
 normalize
 ---------
@@ -56,9 +62,11 @@ Returns in the input value.
 
 Returns the input value.
 
+----
 
 .. include:: ../shared_functions/validate.rst
 
+----
 
 Array Schema
 ------------
@@ -68,6 +76,7 @@ Array Schema
     :lines: 20-23
     :dedent: 8
 
+----
 
 Examples
 ========

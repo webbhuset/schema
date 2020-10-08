@@ -52,7 +52,21 @@ class ArraySchemaSchema extends \Webbhuset\Schema\StructSchema
 
     public function normalize($value)
     {
-        return parent::normalize($value);
+        $value = parent::normalize($value);
+
+        if (!is_array($value)) {
+            return $value;
+        }
+
+        try {
+            $schema = S::getArraySchema($value['type'] ?? '');
+        } catch (\InvalidArgumentException $e) {
+            return $value;
+        }
+
+        $value = $schema->normalize($value);
+
+        return $value;
     }
 
     public function validate($value): \Webbhuset\Schema\ValidationResult

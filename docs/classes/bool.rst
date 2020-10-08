@@ -4,6 +4,7 @@ BoolSchema
 
 BoolSchema validates that a value is a bool.
 
+----
 
 Class synopsis
 ==============
@@ -21,6 +22,7 @@ Class synopsis
         public validate ( mixed $value ) : \Webbhuset\Schema\ValidationResult
     }
 
+----
 
 Methods
 =======
@@ -29,15 +31,19 @@ Methods
 
 .. include:: ../shared_functions/construct.rst
 
+----
 
 .. include:: ../shared_functions/from_array.rst
 
+----
 
 .. include:: ../shared_functions/get_array_schema.rst
 
+----
 
 .. include:: ../shared_functions/to_array.rst
 
+----
 
 normalize
 ---------
@@ -58,9 +64,11 @@ Normalized a value. Values are converted according to `PHP's rules for boolean c
 
 Returns the normalized value.
 
+----
 
 .. include:: ../shared_functions/validate.rst
 
+----
 
 Array Schema
 ============
@@ -70,6 +78,7 @@ Array Schema
     :lines: 20-23
     :dedent: 8
 
+----
 
 Examples
 ========
