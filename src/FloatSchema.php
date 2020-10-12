@@ -34,7 +34,7 @@ class FloatSchema implements \Webbhuset\Schema\SchemaInterface
         return $clone;
     }
 
-    public static function fromArray(array $array): self
+    public static function fromArray(array $array): \Webbhuset\Schema\SchemaInterface
     {
         S::validateArray(static::getArraySchema(), $array);
 
