@@ -94,13 +94,13 @@ class FloatSchema implements \Webbhuset\Schema\SchemaInterface
             return new \Webbhuset\Schema\ValidationResult(['Value must be a float.']);
         }
 
-        if ($this->min !== null && $strlen < $this->min) {
+        if ($this->min !== null && $value < $this->min) {
             return new \Webbhuset\Schema\ValidationResult([
                 sprintf('Value must be at least %s.', $this->min),
             ]);
         }
 
-        if ($this->max !== null && $strlen > $this->max) {
+        if ($this->max !== null && $value > $this->max) {
             return new \Webbhuset\Schema\ValidationResult([
                 sprintf('Value must be at most %s.', $this->max),
             ]);
