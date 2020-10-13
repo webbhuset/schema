@@ -8,7 +8,7 @@ final class IntSchemaTest extends \PHPUnit\Framework\TestCase
 {
     public function testNormalize()
     {
-        $schema = S::Int();
+        $schema = new \Webbhuset\Schema\IntSchema();
 
         $this->assertSame(
             123,
@@ -101,7 +101,7 @@ final class IntSchemaTest extends \PHPUnit\Framework\TestCase
     {
         $this->assertInstanceOf(
             \Webbhuset\Schema\IntSchema::class,
-            S::fromArray([
+            \Webbhuset\Schema\IntSchema::fromArray([
                 'type' => 'int',
                 'args' => [
                     'max' => null,
@@ -112,7 +112,7 @@ final class IntSchemaTest extends \PHPUnit\Framework\TestCase
 
         $this->assertInstanceOf(
             \Webbhuset\Schema\IntSchema::class,
-            S::fromArray([
+            \Webbhuset\Schema\IntSchema::fromArray([
                 'type' => 'int',
                 'args' => [
                     'max' => 10,
@@ -127,23 +127,33 @@ final class IntSchemaTest extends \PHPUnit\Framework\TestCase
         $schema = S::Int();
 
         $this->assertTrue(
-            $schema->validate(123)->isValid()
+            $schema->validate(123)->isValid(),
+            '123 should be a valid input.'
         );
 
         $this->assertNotTrue(
-            $schema->validate('123')->isValid()
+            $schema->validate('123')->isValid(),
+            '"123" should not be a valid input.'
         );
 
         $this->assertNotTrue(
-            $schema->validate(123.0)->isValid()
+            $schema->validate(123.0)->isValid(),
+            '123.0 should not be a valid input.'
         );
 
         $this->assertNotTrue(
-            $schema->validate(true)->isValid()
+            $schema->validate(true)->isValid(),
+            'true should not be a valid input.'
         );
 
         $this->assertNotTrue(
-            $schema->validate([])->isValid()
+            $schema->validate([])->isValid(),
+            '[] should not be a valid input.'
+        );
+
+        $this->assertNotTrue(
+            $schema->validate(null)->isValid(),
+            'null should not be a valid input.'
         );
     }
 
@@ -152,15 +162,18 @@ final class IntSchemaTest extends \PHPUnit\Framework\TestCase
         $schema = S::Int()->min(10);
 
         $this->assertTrue(
-            $schema->validate(123)->isValid()
+            $schema->validate(123)->isValid(),
+            '123 should be a valid input when min is 10.'
         );
 
         $this->assertTrue(
-            $schema->validate(10)->isValid()
+            $schema->validate(10)->isValid(),
+            '10 should be a valid input when min is 10.'
         );
 
         $this->assertNotTrue(
-            $schema->validate(5)->isValid()
+            $schema->validate(5)->isValid(),
+            '5 should not be a valid input when min is 10.'
         );
     }
 
@@ -169,15 +182,18 @@ final class IntSchemaTest extends \PHPUnit\Framework\TestCase
         $schema = S::Int()->max(10);
 
         $this->assertTrue(
-            $schema->validate(5)->isValid()
+            $schema->validate(5)->isValid(),
+            '5 should be a valid input when max is 10.'
         );
 
         $this->assertTrue(
-            $schema->validate(10)->isValid()
+            $schema->validate(10)->isValid(),
+            '10 should be a valid input when max is 10.'
         );
 
         $this->assertNotTrue(
-            $schema->validate(123)->isValid()
+            $schema->validate(123)->isValid(),
+            '123 should not be a valid input when max is 10.'
         );
     }
 

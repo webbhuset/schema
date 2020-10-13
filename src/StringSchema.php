@@ -51,7 +51,8 @@ class StringSchema implements \Webbhuset\Schema\SchemaInterface
 
     public static function fromArray(array $array): \Webbhuset\Schema\SchemaInterface
     {
-        S::validateArray(static::getArraySchema(), $array);
+        $arraySchema = static::getArraySchema();
+        S::validateArray($arraySchema, $arraySchema->normalize($array));
 
         $schema = new self();
 
@@ -113,7 +114,7 @@ class StringSchema implements \Webbhuset\Schema\SchemaInterface
         } elseif (is_bool($value)) {
             return $value ? '1' : '0';
         } elseif (is_scalar($value)) {
-            $value = (string)$value;
+            return (string)$value;
         } else {
             return $value;
         }

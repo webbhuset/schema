@@ -2,6 +2,8 @@
 Classes
 =======
 
+.. _general-classes:
+
 General classes
 ===============
 
@@ -17,6 +19,8 @@ General classes
 * :doc:`/classes/schema_interface` - Interface implemented by schema classes.
 * :doc:`/classes/validation_result` - Data class returned by validation functions.
 
+
+.. _schema-classes:
 
 Schema classes
 ==============
