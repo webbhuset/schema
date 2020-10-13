@@ -48,7 +48,7 @@ values. An example is if you are parsing a JSON, and want to validate it:
 Installation
 ============
 
-You can install Pipeline with `Composer`_ by by running ``composer require webbhuset/schema`` in your terminal or by manually adding ``"webbhuset/schena": "*"`` to your composer.json and running ``composer update webbhuset/schema``.
+You can install Schema with `Composer`_ by by running ``composer require webbhuset/schema`` in your terminal or by manually adding ``"webbhuset/schena": "*"`` to your composer.json and running ``composer update webbhuset/schema``.
 
 .. _Composer: https://getcomposer.org/
 
