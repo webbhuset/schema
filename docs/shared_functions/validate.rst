@@ -9,7 +9,7 @@ Validate a value.
 
 **Parameters**
 
-:$value: The value to validate.
+:mixed $value: The value to validate.
 
 **Return values**
 

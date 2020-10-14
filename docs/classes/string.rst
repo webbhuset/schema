@@ -45,9 +45,17 @@ max
 
 Set maximum string length.
 
-Parameters:
+**Parameters**
 
-:$min: Maximum allowed length.
+:int $min: Maximum allowed length.
+
+**Return values**
+
+Returns a copy of self with maximum length set.
+
+**Throws**
+
+:`InvalidArgumentException`_: When the provided $max is higher than the current min.
 
 ----
 
@@ -60,9 +68,17 @@ min
 
 Set minimum string length.
 
-Parameters:
+**Parameters**
 
-:$min: Minimum allowed length.
+:int $min: Minimum allowed length.
+
+**Return values**
+
+Returns a copy of self with minimum length set.
+
+**Throws**
+
+:`InvalidArgumentException`_: When the provided $min is lower than the current max.
 
 ----
 
@@ -76,10 +92,14 @@ regex
 Set a regex the input must match. Optionally specify a description of the regex,
 which will be included in the error message if the input doesn't match.
 
-Parameters:
+**Parameters**
 
-:$regex: Regex that must match.
-:$description: Optional description.
+:string $regex: Regex that must match.
+:?string $description: Optional description.
+
+**Return values**
+
+Returns a copy of self with regex set.
 
 ----
 

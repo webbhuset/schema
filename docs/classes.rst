@@ -1,6 +1,6 @@
-=======
-Classes
-=======
+===============
+Class reference
+===============
 
 .. _general-classes:
 
